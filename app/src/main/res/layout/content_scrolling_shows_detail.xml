@@ -1,0 +1,154 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.v4.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/colorPrimary"
+    app:layout_behavior="@string/appbar_scrolling_view_behavior"
+    tools:context="com.znaci.goran.moviesaplikacija.activities.ScrollingShowsDetailActivity"
+    tools:showIn="@layout/activity_scrolling_shows_detail">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/colorPrimary"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/nameShow"
+            style="@style/Base.TextAppearance.AppCompat.Medium"
+            android:layout_marginLeft="5dp"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:textStyle="bold"
+            android:textColor="@color/white" />
+
+        <LinearLayout
+            android:layout_marginTop="10dp"
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="40dp">
+
+            <ImageView
+                android:id="@+id/favorite"
+                android:layout_width="0dp"
+                android:layout_height="20dp"
+                android:layout_weight="1"
+                android:src="@drawable/favourites_empty_hdpi"/>
+
+            <ImageView
+                android:id="@+id/watchlist"
+                android:layout_width="0dp"
+                android:layout_height="20dp"
+                android:layout_weight="1"
+                android:src="@drawable/watchlist_add_hdpi"/>
+
+            <ImageView
+                android:id="@+id/ratingimg"
+                android:layout_width="0dp"
+                android:layout_height="20dp"
+                android:src="@drawable/rate_empty_hdpi"
+                android:layout_weight="1"/>
+
+            <TextView
+                android:id="@+id/rating"
+                android:layout_width="0dp"
+                android:layout_height="20dp"
+                android:textColor="@color/white"
+                android:layout_weight="1"/>
+
+            <TextView
+                android:textColor="@color/colorAccent"
+                android:text="RATE IT"
+                android:gravity="center"
+                android:id="@+id/setarating"
+                android:layout_width="0dp"
+                android:layout_height="20dp"
+                android:layout_weight="3"/>
+
+            <TextView
+                android:textColor="@color/zoltarejting"
+                android:gravity="center"
+                android:id="@+id/movieavgrating"
+                android:layout_width="0dp"
+                android:layout_height="20dp"
+                android:layout_weight="4"/>
+
+        </LinearLayout>
+
+
+        <TextView
+            android:id="@+id/firstair"
+            style="@style/Base.TextAppearance.AppCompat.Small"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:layout_marginLeft="10dp"
+            android:textColor="@color/white" />
+
+        <TextView
+            android:id="@+id/numberofepisodes"
+            style="@style/Base.TextAppearance.AppCompat.Small"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:layout_marginLeft="10dp"
+            android:textColor="@color/white" />
+
+        <Button
+            android:id="@+id/seeCast"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:layout_marginTop="10dp"
+            android:background="@color/colorAccent"
+            android:text="@string/see_full_cast_crew"
+            android:textColor="@color/white" />
+
+        <TextView
+            android:id="@+id/description"
+            style="@style/Base.TextAppearance.AppCompat.Small"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="10dp"
+            android:textColor="@color/white" />
+
+        <LinearLayout
+            android:id="@+id/genre"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginTop="20dp"
+            android:layout_marginLeft="5dp"
+            android:orientation="horizontal">
+
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/genreRV"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+
+            </android.support.v7.widget.RecyclerView>
+
+        </LinearLayout>
+
+
+        <LinearLayout
+            android:id="@+id/similarShows"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginTop="20dp"
+            android:orientation="horizontal">
+
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/similarShowsRV"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+
+            </android.support.v7.widget.RecyclerView>
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+</android.support.v4.widget.NestedScrollView>

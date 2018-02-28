@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/login_background"
+    tools:context="com.znaci.goran.moviesaplikacija.activities.LoginActivity">
+
+
+    <ImageView
+        android:id="@+id/logo"
+        android:layout_marginTop="50dp"
+        android:layout_width="match_parent"
+        android:layout_height="200dp"
+        android:padding="30dp"
+        android:src="@mipmap/movie_icon"/>
+
+
+    <EditText
+        android:id="@+id/username"
+        android:paddingLeft="5dp"
+        android:inputType="text"
+        android:layout_below="@id/logo"
+        android:layout_marginTop="10dp"
+        android:background="@drawable/edittextlogin"
+        android:layout_marginLeft="30dp"
+        android:layout_marginRight="30dp"
+        android:layout_width="match_parent"
+        android:layout_height="50dp" />
+
+    <EditText
+        android:id="@+id/password"
+        android:inputType="textPassword"
+        android:paddingLeft="5dp"
+        android:layout_below="@id/username"
+        android:layout_marginTop="10dp"
+        android:background="@drawable/edittextlogin"
+        android:layout_marginLeft="30dp"
+        android:layout_marginRight="30dp"
+        android:layout_width="match_parent"
+        android:layout_height="50dp" />
+
+    <TextView
+        android:textColor="@color/white"
+        android:text="Don't have account? register here."
+        android:layout_marginTop="5dp"
+        android:layout_marginLeft="40dp"
+        android:id="@+id/forgotPass"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/password"/>
+
+    <Button
+        android:id="@+id/login"
+        android:text="Login"
+        android:layout_marginTop="30dp"
+        android:layout_marginLeft="30dp"
+        android:layout_marginRight="30dp"
+        android:layout_below="@id/forgotPass"
+        android:textColor="@color/white"
+        android:background="@drawable/btnlogin"
+        android:layout_width="match_parent"
+        android:layout_height="50dp" />
+
+    <TextView
+        android:id="@+id/ctnGuest"
+        android:layout_marginTop="10dp"
+        android:textColor="@color/white"
+        android:text="Continue as Guest"
+        android:layout_below="@id/login"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"/>
+
+</RelativeLayout>

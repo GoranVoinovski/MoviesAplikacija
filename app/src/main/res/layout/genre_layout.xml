@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/genreClick"
+    android:layout_width="130dp"
+    android:layout_height="30dp">
+
+    <TextView
+        android:id="@+id/genrename"
+        android:padding="5dp"
+        android:layout_marginLeft="3dp"
+        android:background="@drawable/genreandyear"
+        style="@style/Base.TextAppearance.AppCompat.Small"
+        android:gravity="center"
+        android:textColor="@color/white"
+        android:layout_width="120dp"
+        android:layout_height="match_parent" />
+
+</LinearLayout>

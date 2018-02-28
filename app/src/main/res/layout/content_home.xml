@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    app:layout_behavior="@string/appbar_scrolling_view_behavior"
+    tools:context="com.znaci.goran.moviesaplikacija.activities.ExploreActivity"
+    tools:showIn="@layout/app_bar_home">
+
+  <android.support.v4.view.ViewPager
+      android:id="@+id/vp"
+      android:background="@color/white"
+      android:backgroundTint="@color/colorPrimary"
+      android:layout_width="match_parent"
+      android:layout_height="match_parent">
+
+    <android.support.design.widget.TabLayout
+        app:tabTextColor="@color/white"
+        app:tabBackground="@color/colorAccent"
+        style="@style/Base.TextAppearance.AppCompat.Small"
+        app:tabSelectedTextColor="@color/white"
+        app:tabIndicatorColor="@color/white"
+        android:id="@+id/tablayout"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"/>
+
+
+  </android.support.v4.view.ViewPager>
+
+  <EditText
+      android:layout_marginTop="45dp"
+      android:id="@+id/search_bar"
+      android:drawablePadding="10dp"
+      android:padding="10dp"
+      android:background="@drawable/searchbar"
+      android:drawableLeft="@drawable/search_icon_hdpi"
+      android:hint="search"
+      android:layout_width="260dp"
+      android:layout_height="45dp"
+      />
+
+    <Button
+        android:id="@+id/btnpager"
+        android:layout_width="100dp"
+        android:padding="2dp"
+        style="@style/Base.TextAppearance.AppCompat.Small"
+        android:layout_marginTop="46dp"
+        android:layout_marginLeft="5dp"
+        android:text="Advanced search"
+        android:textColor="@color/colorAccent"
+        android:layout_toRightOf="@id/search_bar"
+        android:background="@color/transparent2"
+        android:layout_height="45dp" />
+
+  <android.support.v7.widget.RecyclerView
+      android:id="@+id/searchMoviesView"
+      android:visibility="gone"
+      android:background="@color/colorPrimary"
+      android:layout_below="@+id/search_bar"
+      android:layout_width="match_parent"
+      android:layout_height="match_parent">
+
+  </android.support.v7.widget.RecyclerView>
+
+</RelativeLayout>

@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:background="@color/colorPrimary"
+    android:layout_height="match_parent"
+    tools:context="com.znaci.goran.moviesaplikacija.activities.PeopleActivity">
+
+    <EditText
+        android:layout_marginTop="5dp"
+        android:id="@+id/searchPeople"
+        android:drawablePadding="10dp"
+        android:padding="10dp"
+        android:background="@drawable/searchbar"
+        android:drawableLeft="@drawable/search_icon_hdpi"
+        android:hint="search"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        />
+
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_below="@id/searchPeople"
+        android:background="@color/colorPrimary"
+        android:layout_height="match_parent">
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/peopleRV"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+        </android.support.v7.widget.RecyclerView>
+
+        <Button
+            android:id="@+id/loadmore"
+            android:background="@drawable/loadmore"
+            android:visibility="gone"
+            android:text="Load more"
+            android:textColor="@color/white"
+            android:layout_gravity="bottom|center"
+            android:layout_marginBottom="20dp"
+            android:layout_width="100dp"
+            android:layout_height="30dp" />
+
+    </FrameLayout>
+
+
+
+</RelativeLayout>

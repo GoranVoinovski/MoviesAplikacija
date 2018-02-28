@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/personLayout"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_margin="5dp"
+    android:background="@color/colorPrimaryDark">
+
+    <ImageView
+        android:id="@+id/peopleImage"
+        android:layout_width="100dp"
+        android:layout_height="160dp"
+        android:background="@color/colorPrimaryDark"/>
+
+    <TextView
+        android:id="@+id/number"
+        android:layout_marginRight="5dp"
+        android:layout_marginTop="5dp"
+        android:layout_alignParentRight="true"
+        android:gravity="right"
+        android:padding="2dp"
+        style="@style/Base.TextAppearance.AppCompat.Large"
+        android:textStyle="bold"
+        android:textColor="@color/colorAccent"
+        android:layout_width="40dp"
+        android:layout_height="30dp"/>
+
+
+
+    <TextView
+        android:id="@+id/Peoplename"
+        android:layout_marginTop="5dp"
+        android:layout_marginLeft="5dp"
+        android:textColor="@color/white"
+        android:padding="2dp"
+        style="@style/Base.TextAppearance.AppCompat.Large"
+        android:textStyle="bold"
+        android:layout_width="wrap_content"
+        android:layout_height="30dp"
+        android:layout_toRightOf="@id/peopleImage"/>
+
+
+    <TextView
+        android:id="@+id/PeopleFilmography"
+        android:layout_marginTop="30dp"
+        android:layout_marginLeft="5dp"
+        android:textColor="@color/white"
+        android:layout_below="@id/Peoplename"
+        android:padding="2dp"
+        style="@style/Base.TextAppearance.AppCompat.Small"
+        android:layout_width="match_parent"
+        android:layout_height="80dp"
+        android:layout_toRightOf="@id/peopleImage"/>
+
+
+</RelativeLayout>
