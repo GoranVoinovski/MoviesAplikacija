@@ -12,18 +12,30 @@ import android.widget.TextView;
 
 
 import com.squareup.picasso.Picasso;
+import com.znaci.goran.moviesaplikacija.activities.FavoriteShowsActivity;
 import com.znaci.goran.moviesaplikacija.activities.FavoritesActivity;
 import com.znaci.goran.moviesaplikacija.activities.RatedActivity;
 import com.znaci.goran.moviesaplikacija.activities.ScrollingMovieDetailActivity;
+import com.znaci.goran.moviesaplikacija.activities.ScrollingShowsDetailActivity;
+import com.znaci.goran.moviesaplikacija.activities.WatchlistActivity;
+import com.znaci.goran.moviesaplikacija.activities.WatchlistShowsActivity;
 import com.znaci.goran.moviesaplikacija.adapters.RecyclerViewPopularAdapter;
+import com.znaci.goran.moviesaplikacija.adapters.RecyclerViewShowsAdapter;
 import com.znaci.goran.moviesaplikacija.api.RestApi;
 import com.znaci.goran.moviesaplikacija.listeners.OnRowMovieClickListener;
+import com.znaci.goran.moviesaplikacija.listeners.OnRowShowClickListener;
+import com.znaci.goran.moviesaplikacija.models.FavoriteModel;
 import com.znaci.goran.moviesaplikacija.models.Movie;
 import com.znaci.goran.moviesaplikacija.models.MovieModel;
+import com.znaci.goran.moviesaplikacija.models.Shows;
+import com.znaci.goran.moviesaplikacija.models.ShowsModel;
 import com.znaci.goran.moviesaplikacija.models.User;
 import com.znaci.goran.moviesaplikacija.models.VideoModel;
 import com.znaci.goran.moviesaplikacija.models.Videos;
+import com.znaci.goran.moviesaplikacija.models.WatchModel;
 import com.znaci.goran.moviesaplikacija.preferencesManager.LogInPreferences;
+
+import java.util.ArrayList;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -37,6 +49,10 @@ import retrofit2.Response;
 public class ApiCalls {
 
     Context context;
+    MovieModel movieModel;
+    ShowsModel showModel;
+    FavoriteModel favoriteModel;
+    WatchModel watchModel;
 
     public ApiCalls(Context context) {
         this.context = context;
@@ -105,6 +121,103 @@ public class ApiCalls {
             @Override
             public void onFailure(Call<MovieModel> call, Throwable t) {
             }});
+    }
+
+    public void GetListFavorites(){
+
+        String session_id = LogInPreferences.getSessionID(context);
+        RestApi api = new RestApi(context);
+        Call<MovieModel> call = api.getUserFavorites("account_id", session_id);
+        call.enqueue(new Callback<MovieModel>() {
+            @Override
+            public void onResponse(Call<MovieModel> call, Response<MovieModel> response) {
+                if (response.code() == 200) {
+                    movieModel = response.body();
+                    favoriteModel = new FavoriteModel();
+                    for (Movie movie:movieModel.results){
+                        favoriteModel.favorites.add(movie.id);
+                       LogInPreferences.addFavoriteList(favoriteModel,context);
+                    }
+                }}
+            @Override
+            public void onFailure(Call<MovieModel> call, Throwable t) {
+            }});
+
+
+    }
+
+    public void getWatchList() {
+
+        String session_id = LogInPreferences.getSessionID(context);
+        RestApi api = new RestApi(context);
+        Call<MovieModel> call = api.getUserWatchlist("account_id", session_id);
+        call.enqueue(new Callback<MovieModel>() {
+            @Override
+            public void onResponse(Call<MovieModel> call, Response<MovieModel> response) {
+                if (response.code() == 200) {
+                    watchModel = new WatchModel();
+                    movieModel = response.body();
+                    for (Movie movie : movieModel.results) {
+                        watchModel.favorites.add(movie.id);
+                        LogInPreferences.addWtchList(watchModel, context);
+                    }
+                }
+            }
+
+            @Override
+            public void onFailure(Call<MovieModel> call, Throwable t) {
+
+            }
+        });
+    }
+
+    public void GetListShowsFavorites(){
+
+        String session_id = LogInPreferences.getSessionID(context);
+        RestApi api = new RestApi(context);
+        Call<ShowsModel> call = api.getUserShowsFavorites("account_id",session_id);
+        call.enqueue(new Callback<ShowsModel>() {
+            @Override
+            public void onResponse(Call<ShowsModel> call, Response<ShowsModel> response) {
+                if (response.code() == 200) {
+                    FavoriteModel favoriteModel2 = new FavoriteModel();
+                    showModel = response.body();
+                    for (Shows shows : showModel.results) {
+                        favoriteModel2.favorites.add(shows.id);
+                        LogInPreferences.addFavoriteListShows(favoriteModel2, context);
+                    }
+                  }
+            }
+            @Override
+            public void onFailure(Call<ShowsModel> call, Throwable t) {
+            }});
+
+    }
+
+    public void getWatchListShows(){
+
+        String session_id = LogInPreferences.getSessionID(context);
+        RestApi api = new RestApi(context);
+        Call<ShowsModel> call = api.getUserShowsWatchlist("account_id",session_id);
+        call.enqueue(new Callback<ShowsModel>() {
+            @Override
+            public void onResponse(Call<ShowsModel> call, Response<ShowsModel> response) {
+                if (response.code() == 200) {
+                    WatchModel watchModel2 = new WatchModel();
+                    showModel = response.body();
+                    for (Shows shows : showModel.results) {
+                        watchModel2.favorites.add(shows.id);
+                        LogInPreferences.addWtchListShows(watchModel2, context);
+                    }
+
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ShowsModel> call, Throwable t) {
+
+            }
+        });
     }
 
 }

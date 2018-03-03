@@ -118,9 +118,9 @@ public class RestApi {
 
     public Call<Movie> getFavorites(int id,String session_id){return request().getFavorites(id,session_id);}
 
-    public Call<Movie> postUserFavorites(String account_id, String session_id, String json, FavoriteMoviePost body){return request().postUserFavorites(account_id,session_id,json,body);}
+    public Call<Movie> postUserFavorites(String account_id, String session_id, FavoriteMoviePost body){return request().postUserFavorites(account_id,session_id,body);}
 
-    public Call<Shows> postUserShowFavorites(String account_id, String session_id, String json, FavoriteMoviePost body){return request().postUserShowFavorites(account_id,session_id,json,body);}
+    public Call<Shows> postUserShowFavorites(String account_id, String session_id, FavoriteMoviePost body){return request().postUserShowFavorites(account_id,session_id,body);}
 
     public Call<Shows> getShowFavorite(int id,String session_id){return request().getShowFavorite(id,session_id);}
 
@@ -132,17 +132,17 @@ public class RestApi {
 
     public Call<Movie> getWatchlist(int id,String session_id){return request().getWatchlist(id,session_id);}
 
-    public Call<Movie> postUserWatchlist(String account_id, String session_id, String json, WatchlistMoviePost body){return request().postUserWatchlist(account_id,session_id,json,body);}
+    public Call<Movie> postUserWatchlist(String account_id, String session_id, WatchlistMoviePost body){return request().postUserWatchlist(account_id,session_id,body);}
 
-    public Call<Shows> postUserShowWatchlist(String account_id, String session_id, String json, WatchlistMoviePost body){return request().postUserShowWatchlist(account_id,session_id,json,body);}
+    public Call<Shows> postUserShowWatchlist(String account_id, String session_id, WatchlistMoviePost body){return request().postUserShowWatchlist(account_id,session_id,body);}
 
     public Call<ShowsModel> getUserShowsWatchlist(String account_id,String session_id){return request().getUserShowsWatchlist(account_id,session_id);}
 
     //--------------------------------------------Rated------------------------------------------------------------------------------
 
-    public Call<Movie> postUserRateing(int movie_id, String session_id, String json, Rated body){return request().postUserRating(movie_id,session_id,json,body);}
+    public Call<Movie> postUserRateing(int movie_id, String session_id, Rated body){return request().postUserRating(movie_id,session_id,body);}
 
-    public Call<Shows> postUserShowRateing(int movie_id, String session_id, String json, Rated body){return request().postUserShowRating(movie_id,session_id,json,body);}
+    public Call<Shows> postUserShowRateing(int movie_id, String session_id, String json, Rated body){return request().postUserShowRating(movie_id,session_id,body);}
 
     public Call<ShowsModel> getUserRatedShows(String account_id,String session_id){return request().getUserRatedShows(account_id,session_id);}
 

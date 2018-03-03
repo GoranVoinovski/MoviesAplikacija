@@ -127,10 +127,10 @@ public interface ApiService {
     Call<Movie> getFavorites(@Path("movie_id") int link,@Query("session_id")String session_id);
 
     @POST("account/{account_id}/favorite?" + ApiConstants.ApiKey)
-    Call<Movie> postUserFavorites(@Path("account_id") String account_id, @Query("session_id") String session_id, @Header("json/application") String json, @Body FavoriteMoviePost body);
+    Call<Movie> postUserFavorites(@Path("account_id") String account_id, @Query("session_id") String session_id, @Body FavoriteMoviePost body);
 
     @POST("account/{account_id}/favorite?" + ApiConstants.ApiKey)
-    Call<Shows> postUserShowFavorites(@Path("account_id") String account_id, @Query("session_id") String session_id, @Header("json/application") String json, @Body FavoriteMoviePost body);
+    Call<Shows> postUserShowFavorites(@Path("account_id") String account_id, @Query("session_id") String session_id, @Body FavoriteMoviePost body);
 
     @GET("account/{account_id}/favorite/tv?" + ApiConstants.ApiKey)
     Call<ShowsModel> getUserShowsFavorites(@Path("account_id") String account_id,@Query("session_id") String session_id);
@@ -147,10 +147,10 @@ public interface ApiService {
     Call<Movie> getWatchlist(@Path("movie_id") int link,@Query("session_id")String session_id);
 
     @POST("account/{account_id}/watchlist?" + ApiConstants.ApiKey)
-    Call<Movie> postUserWatchlist(@Path("account_id") String account_id, @Query("session_id") String session_id, @Header("json/application") String json, @Body WatchlistMoviePost body);
+    Call<Movie> postUserWatchlist(@Path("account_id") String account_id, @Query("session_id") String session_id, @Body WatchlistMoviePost body);
 
     @POST("account/{account_id}/watchlist?" + ApiConstants.ApiKey)
-    Call<Shows> postUserShowWatchlist(@Path("account_id") String account_id, @Query("session_id") String session_id, @Header("json/application") String json, @Body WatchlistMoviePost body);
+    Call<Shows> postUserShowWatchlist(@Path("account_id") String account_id, @Query("session_id") String session_id, @Body WatchlistMoviePost body);
 
     @GET("account/{account_id}/watchlist/tv?" + ApiConstants.ApiKey)
     Call<ShowsModel> getUserShowsWatchlist(@Path("account_id") String account_id,@Query("session_id") String session_id);
@@ -158,10 +158,10 @@ public interface ApiService {
     //--------------------------------------------Rated------------------------------------------------------------------------------
 
     @POST("movie/{movie_id}/rating?" + ApiConstants.ApiKey)
-    Call<Movie> postUserRating(@Path("movie_id") int account_id, @Query("session_id") String session_id, @Header("json/application") String json, @Body Rated body);
+    Call<Movie> postUserRating(@Path("movie_id") int account_id, @Query("session_id") String session_id,@Body Rated body);
 
     @POST("tv/{tv_id}/rating?" + ApiConstants.ApiKey)
-    Call<Shows> postUserShowRating(@Path("tv_id") int account_id, @Query("session_id") String session_id, @Header("json/application") String json, @Body Rated body);
+    Call<Shows> postUserShowRating(@Path("tv_id") int account_id, @Query("session_id") String session_id,@Body Rated body);
 
     @GET("account/{account_id}/rated/movies?" + ApiConstants.ApiKey)
     Call<MovieModel> getUserRated(@Path("account_id") String account_id,@Query("session_id") String session_id);

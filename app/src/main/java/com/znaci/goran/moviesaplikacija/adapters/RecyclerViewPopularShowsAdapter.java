@@ -13,10 +13,12 @@ import com.squareup.picasso.Picasso;
 import com.znaci.goran.moviesaplikacija.R;
 import com.znaci.goran.moviesaplikacija.listeners.OnRowMovieClickListener;
 import com.znaci.goran.moviesaplikacija.listeners.OnRowShowClickListener;
+import com.znaci.goran.moviesaplikacija.models.FavoriteModel;
 import com.znaci.goran.moviesaplikacija.models.Movie;
 import com.znaci.goran.moviesaplikacija.models.Rated;
 import com.znaci.goran.moviesaplikacija.models.RatedList;
 import com.znaci.goran.moviesaplikacija.models.Shows;
+import com.znaci.goran.moviesaplikacija.models.WatchModel;
 import com.znaci.goran.moviesaplikacija.preferencesManager.LogInPreferences;
 
 import java.util.ArrayList;
@@ -34,6 +36,8 @@ public class RecyclerViewPopularShowsAdapter extends RecyclerView.Adapter<Recycl
     ArrayList<Shows> results = new ArrayList<>();
     OnRowShowClickListener onRowMovieClickListener;
     RatedList ratedList;
+    FavoriteModel model;
+    WatchModel watchModel;
 
     public RecyclerViewPopularShowsAdapter(Context context, OnRowShowClickListener _onRowMovieClickListener) {
         this.context = context;
@@ -62,6 +66,23 @@ public class RecyclerViewPopularShowsAdapter extends RecyclerView.Adapter<Recycl
     public void onBindViewHolder(RecyclerViewPopularShowsAdapter.ViewHolder holder, final int position) {
         final Shows show = results.get(position);
         ratedList = LogInPreferences.getRatedShow(context);
+        model = LogInPreferences.getFavoriteListShows(context);
+        watchModel = LogInPreferences.getWtchListShows(context);
+        holder.fav.setBackgroundResource(R.drawable.favourites_empty_hdpi);
+        holder.wtch.setBackgroundResource(R.drawable.watchlist_add_hdpi);
+        for (Integer integer:model.favorites){
+            if (integer == show.id){
+                holder.fav.setBackgroundResource(R.drawable.favourites_full_hdpi);
+            }
+
+        }
+
+        for (Integer integer:watchModel.favorites){
+            if (integer == show.id){
+                holder.wtch.setBackgroundResource(R.drawable.watchlist_remove_hdpi);
+            }
+
+        }
         if (ratedList == null){
             ratedList = new RatedList();
             if (ratedList.ratedMovies == null){
@@ -120,6 +141,10 @@ public class RecyclerViewPopularShowsAdapter extends RecyclerView.Adapter<Recycl
         TextView nameMovie;
         @BindView(R.id.movieRating)
         TextView ratingMovie;
+        @BindView(R.id.imagefav)
+        TextView fav;
+        @BindView(R.id.imagewtch)
+        TextView wtch;
 
         public ViewHolder(View itemView) {
             super(itemView);

@@ -11,10 +11,12 @@ import android.widget.TextView;
 import com.squareup.picasso.Picasso;
 import com.znaci.goran.moviesaplikacija.R;
 import com.znaci.goran.moviesaplikacija.listeners.OnRowShowClickListener;
+import com.znaci.goran.moviesaplikacija.models.FavoriteModel;
 import com.znaci.goran.moviesaplikacija.models.Rated;
 import com.znaci.goran.moviesaplikacija.models.RatedList;
 import com.znaci.goran.moviesaplikacija.models.Shows;
 import com.znaci.goran.moviesaplikacija.models.ShowsModel;
+import com.znaci.goran.moviesaplikacija.models.WatchModel;
 import com.znaci.goran.moviesaplikacija.preferencesManager.LogInPreferences;
 
 import java.util.ArrayList;
@@ -33,6 +35,9 @@ public class RecyclerViewShowsAdapter extends RecyclerView.Adapter<RecyclerViewS
     OnRowShowClickListener onRowMovieClickListener;
     ShowsModel model;
     RatedList ratedList;
+    FavoriteModel model2;
+    WatchModel watchModel;
+
     public RecyclerViewShowsAdapter(Context context, OnRowShowClickListener _onRowMovieClickListener) {
         this.context = context;
         this.onRowMovieClickListener = _onRowMovieClickListener;
@@ -59,6 +64,23 @@ public class RecyclerViewShowsAdapter extends RecyclerView.Adapter<RecyclerViewS
     @Override
     public void onBindViewHolder(RecyclerViewShowsAdapter.ViewHolder holder, final int position) {
         final Shows show = results.get(position);
+        model2 = LogInPreferences.getFavoriteListShows(context);
+        watchModel = LogInPreferences.getWtchListShows(context);
+        holder.fav.setBackgroundResource(R.drawable.favourites_empty_hdpi);
+        holder.wtch.setBackgroundResource(R.drawable.watchlist_add_hdpi);
+        for (Integer integer:model2.favorites){
+            if (integer == show.id){
+                holder.fav.setBackgroundResource(R.drawable.favourites_full_hdpi);
+            }
+
+        }
+
+        for (Integer integer:watchModel.favorites){
+            if (integer == show.id){
+                holder.wtch.setBackgroundResource(R.drawable.watchlist_remove_hdpi);
+            }
+
+        }
         ratedList = LogInPreferences.getRatedShow(context);
         if (ratedList == null){
             ratedList = new RatedList();
@@ -92,6 +114,7 @@ public class RecyclerViewShowsAdapter extends RecyclerView.Adapter<RecyclerViewS
 
         }
         String path = "http://image.tmdb.org/t/p/w185" + show.poster_path;
+        holder.movieswatch.setText(show.first_air_date);
         holder.nameMovie.setText("  " + show.original_name);
         Picasso.with(context).load(path).fit().into(holder.moviesImage);;
         holder.moviesImage.setOnClickListener(new View.OnClickListener() {
@@ -118,6 +141,11 @@ public class RecyclerViewShowsAdapter extends RecyclerView.Adapter<RecyclerViewS
         TextView ratingMovie;
         @BindView(R.id.imagewatch)
         TextView movieswatch;
+        @BindView(R.id.imagefav)
+        TextView fav;
+        @BindView(R.id.imagewtch)
+        TextView wtch;
+
         public ViewHolder(View itemView) {
             super(itemView);
             ButterKnife.bind(this,itemView);

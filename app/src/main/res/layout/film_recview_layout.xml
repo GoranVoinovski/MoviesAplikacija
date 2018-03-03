@@ -55,4 +55,23 @@
         android:layout_width="35dp"
         android:layout_height="20dp" />
 
+    <TextView
+        android:id="@+id/imagefav"
+        android:layout_marginBottom="5dp"
+        android:layout_alignParentBottom="true"
+        android:layout_toRightOf="@id/imagewatch"
+        android:layout_marginLeft="20dp"
+        android:layout_width="20dp"
+        android:layout_height="20dp" />
+
+    <TextView
+        android:id="@+id/imagewtch"
+        android:layout_marginBottom="5dp"
+        android:layout_alignParentBottom="true"
+        android:layout_toRightOf="@id/imagewatch"
+        android:layout_marginLeft="50dp"
+        android:layout_width="20dp"
+        android:layout_height="20dp" />
+
+
 </RelativeLayout>

@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.design.widget.FloatingActionButton;
@@ -29,6 +30,7 @@ import com.znaci.goran.moviesaplikacija.adapters.RecyclerViewGenretAdapter;
 import com.znaci.goran.moviesaplikacija.adapters.RecyclerViewSimilarAdapter;
 import com.znaci.goran.moviesaplikacija.adapters.RecyclerViewSimilarShowsAdapter;
 import com.znaci.goran.moviesaplikacija.api.RestApi;
+import com.znaci.goran.moviesaplikacija.helpers.ApiCalls;
 import com.znaci.goran.moviesaplikacija.listeners.OnRowGenreClickListener;
 import com.znaci.goran.moviesaplikacija.listeners.OnRowMovieClickListener;
 import com.znaci.goran.moviesaplikacija.listeners.OnRowShowClickListener;
@@ -100,7 +102,8 @@ public class ScrollingShowsDetailActivity extends AppCompatActivity {
     String favklik = "no";
     String watchklik = "no";
     RatedList ratedList;
-    ProgressDialog pd;
+    ProgressDialog pd,pd1;
+    ApiCalls apiCalls;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -109,8 +112,11 @@ public class ScrollingShowsDetailActivity extends AppCompatActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         ButterKnife.bind(this);
+        apiCalls = new ApiCalls(this);
         pd = new ProgressDialog(ScrollingShowsDetailActivity.this);
         pd.setMessage("loading");
+        pd1 = new ProgressDialog(ScrollingShowsDetailActivity.this);
+        pd1.setMessage("working");
         fab = (FloatingActionButton) findViewById(R.id.fab);
         toolbarLayout = (CollapsingToolbarLayout) findViewById(R.id.toolbar_layout);
         toolbarLayout.setExpandedTitleColor(getResources().getColor(R.color.transparent2));
@@ -292,28 +298,44 @@ public class ScrollingShowsDetailActivity extends AppCompatActivity {
         });
     }
 
+    @Override
+    public void onBackPressed() {
+        Intent intent = new Intent();
+        setResult(RESULT_OK, intent);
+        finish();
+    }
+
     public void FavoriteListener() {
             favorite.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
             if (!session.isEmpty()){
+                pd1.show();
                 String session_id = LogInPreferences.getSessionID(ScrollingShowsDetailActivity.this);
                 int acc_id = LogInPreferences.getAccountID(ScrollingShowsDetailActivity.this);
                 if (favklik.equals("no")) {
+                    Picasso.with(ScrollingShowsDetailActivity.this).load(R.drawable.favourites_full_hdpi).into(favorite);
+                    favklik = "yes";
                     FavoriteMoviePost favoriteMoviePost = new FavoriteMoviePost();
                     favoriteMoviePost.favorite = true;
                     favoriteMoviePost.media_id = movieID;
                     favoriteMoviePost.media_type = "tv";
                     RestApi api = new RestApi(ScrollingShowsDetailActivity.this);
-                    Call<Shows> call = api.postUserShowFavorites("account_id", session_id, "json/application", favoriteMoviePost);
+                    Call<Shows> call = api.postUserShowFavorites("account_id", session_id, favoriteMoviePost);
                     call.enqueue(new Callback<Shows>() {
                         @Override
                         public void onResponse(Call<Shows> call, Response<Shows> response) {
                             if (response.code() == 201) {
                                 model = response.body();
-                                Picasso.with(ScrollingShowsDetailActivity.this).load(R.drawable.favourites_full_hdpi).into(favorite);
-                                favklik = "yes";
+                                apiCalls.GetListShowsFavorites();
                             }
+                            Handler handler = new Handler();
+                            handler.postDelayed(new Runnable() {
+                                @Override
+                                public void run() {
+                                    pd1.dismiss();
+                                }
+                            },2000);
                         }
 
                         @Override
@@ -321,20 +343,31 @@ public class ScrollingShowsDetailActivity extends AppCompatActivity {
                         }
                     });
                 } else {
+                    pd1.show();
+                    Picasso.with(ScrollingShowsDetailActivity.this).load(R.drawable.favourites_empty_hdpi).into(favorite);
+                    favklik = "no";
                     FavoriteMoviePost favoriteMoviePost = new FavoriteMoviePost();
                     favoriteMoviePost.favorite = false;
                     favoriteMoviePost.media_id = movieID;
                     favoriteMoviePost.media_type = "tv";
 
                     RestApi api = new RestApi(ScrollingShowsDetailActivity.this);
-                    Call<Shows> call = api.postUserShowFavorites("account_id", session_id, "json/application", favoriteMoviePost);
+                    Call<Shows> call = api.postUserShowFavorites("account_id", session_id, favoriteMoviePost);
                     call.enqueue(new Callback<Shows>() {
                         @Override
                         public void onResponse(Call<Shows> call, Response<Shows> response) {
                             if (response.code() == 200) {
                                 model = response.body();
-                                Picasso.with(ScrollingShowsDetailActivity.this).load(R.drawable.favourites_empty_hdpi).into(favorite);
+
+                                apiCalls.GetListShowsFavorites();
                             }
+                            Handler handler = new Handler();
+                            handler.postDelayed(new Runnable() {
+                                @Override
+                                public void run() {
+                                    pd1.dismiss();
+                                }
+                            },2000);
                         }
 
                         @Override
@@ -359,20 +392,29 @@ public class ScrollingShowsDetailActivity extends AppCompatActivity {
                     String session_id = LogInPreferences.getSessionID(ScrollingShowsDetailActivity.this);
                     int acc_id = LogInPreferences.getAccountID(ScrollingShowsDetailActivity.this);
                     if (watchklik.equals("no")) {
+                        pd1.show();
+                        Picasso.with(ScrollingShowsDetailActivity.this).load(R.drawable.watchlist_remove_hdpi).into(watchlist);
+                        favklik = "yes";
                         WatchlistMoviePost watchlistMoviePost = new WatchlistMoviePost();
                         watchlistMoviePost.watchlist = true;
                         watchlistMoviePost.media_id = movieID;
                         watchlistMoviePost.media_type = "tv";
                         RestApi api = new RestApi(ScrollingShowsDetailActivity.this);
-                        Call<Shows> call = api.postUserShowWatchlist("account_id", session_id, "json/application", watchlistMoviePost);
+                        Call<Shows> call = api.postUserShowWatchlist("account_id", session_id, watchlistMoviePost);
                         call.enqueue(new Callback<Shows>() {
                             @Override
                             public void onResponse(Call<Shows> call, Response<Shows> response) {
                                 if (response.code() == 201) {
                                     model = response.body();
-                                    Picasso.with(ScrollingShowsDetailActivity.this).load(R.drawable.watchlist_remove_hdpi).into(watchlist);
-                                    favklik = "yes";
+                                    apiCalls.getWatchListShows();
                                 }
+                                Handler handler = new Handler();
+                                handler.postDelayed(new Runnable() {
+                                    @Override
+                                    public void run() {
+                                        pd1.dismiss();
+                                    }
+                                },2000);
                             }
 
                             @Override
@@ -380,20 +422,30 @@ public class ScrollingShowsDetailActivity extends AppCompatActivity {
                             }
                         });
                     } else {
+                        pd1.show();
+                        Picasso.with(ScrollingShowsDetailActivity.this).load(R.drawable.watchlist_add_hdpi).into(watchlist);
+                        favklik = "yes";
                         WatchlistMoviePost watchlistMoviePost = new WatchlistMoviePost();
                         watchlistMoviePost.watchlist = false;
                         watchlistMoviePost.media_id = movieID;
                         watchlistMoviePost.media_type = "tv";
 
                         RestApi api = new RestApi(ScrollingShowsDetailActivity.this);
-                        Call<Shows> call = api.postUserShowWatchlist("account_id", session_id, "json/application", watchlistMoviePost);
+                        Call<Shows> call = api.postUserShowWatchlist("account_id", session_id, watchlistMoviePost);
                         call.enqueue(new Callback<Shows>() {
                             @Override
                             public void onResponse(Call<Shows> call, Response<Shows> response) {
                                 if (response.code() == 200) {
                                     model = response.body();
-                                    Picasso.with(ScrollingShowsDetailActivity.this).load(R.drawable.watchlist_add_hdpi).into(watchlist);
+                                    apiCalls.getWatchListShows();
                                 }
+                                Handler handler = new Handler();
+                                handler.postDelayed(new Runnable() {
+                                    @Override
+                                    public void run() {
+                                        pd1.dismiss();
+                                    }
+                                },2000);
                             }
 
                             @Override
@@ -477,6 +529,7 @@ public class ScrollingShowsDetailActivity extends AppCompatActivity {
                         call.enqueue(new Callback<Shows>() {
                             @Override
                             public void onResponse(Call<Shows> call, Response<Shows> response) {
+                                pd1.show();
                                 if (response.code() == 201) {
                                     model = response.body();
                                     ratedList.ratedMovies.add(rated);
@@ -484,6 +537,13 @@ public class ScrollingShowsDetailActivity extends AppCompatActivity {
                                     rankDialog.dismiss();
                                     ratiingtxt.setText("" + rated.value);
                                 }
+                                Handler handler = new Handler();
+                                handler.postDelayed(new Runnable() {
+                                    @Override
+                                    public void run() {
+                                        pd1.dismiss();
+                                    }
+                                },2000);
                             }
 
                             @Override
@@ -494,6 +554,7 @@ public class ScrollingShowsDetailActivity extends AppCompatActivity {
                         rankDialog.dismiss();
                     }
                 });
+
                 rankDialog.show();
             }
         });}

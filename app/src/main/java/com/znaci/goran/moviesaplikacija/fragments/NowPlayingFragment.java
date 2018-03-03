@@ -123,4 +123,20 @@ public class NowPlayingFragment extends Fragment{
             }
         });
     }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (resultCode == getActivity().RESULT_OK && requestCode == 1111){
+            adapter.notifyDataSetChanged();
+
+        }
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        if (adapter != null) {
+            adapter.notifyDataSetChanged();
+        }
+    }
 }

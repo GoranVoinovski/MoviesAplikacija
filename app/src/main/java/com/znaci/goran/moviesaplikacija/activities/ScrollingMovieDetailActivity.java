@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.media.Rating;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.design.widget.FloatingActionButton;
@@ -105,7 +106,7 @@ public class ScrollingMovieDetailActivity extends AppCompatActivity {
     ApiCalls apiCalls;
     String session;
     RatedList ratedList;
-    ProgressDialog pd;
+    ProgressDialog pd,pd1;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -117,6 +118,8 @@ public class ScrollingMovieDetailActivity extends AppCompatActivity {
         ButterKnife.bind(this);
         pd = new ProgressDialog(ScrollingMovieDetailActivity.this);
         pd.setMessage("loading");
+        pd1 = new ProgressDialog(ScrollingMovieDetailActivity.this);
+        pd1.setMessage("working");
         toolbarLayout = (CollapsingToolbarLayout) findViewById(R.id.toolbar_layout);
         toolbarLayout.setExpandedTitleColor(getResources().getColor(R.color.transparent2));
         apiCalls = new ApiCalls(this);
@@ -370,8 +373,9 @@ public class ScrollingMovieDetailActivity extends AppCompatActivity {
                 @Override
                 public void onClick(View v) {
                   if (!session.isEmpty()){
-                      int acc_id = LogInPreferences.getAccountID(ScrollingMovieDetailActivity.this);
+                      final int acc_id = LogInPreferences.getAccountID(ScrollingMovieDetailActivity.this);
                       if (favklik.equals("no")) {
+                          pd1.show();
                           Picasso.with(ScrollingMovieDetailActivity.this).load(R.drawable.favourites_full_hdpi).into(favorite);
                           favklik = "yes";
                           FavoriteMoviePost favoriteMoviePost = new FavoriteMoviePost();
@@ -379,20 +383,31 @@ public class ScrollingMovieDetailActivity extends AppCompatActivity {
                           favoriteMoviePost.media_id = movieID;
                           favoriteMoviePost.media_type = "movie";
                           RestApi api = new RestApi(ScrollingMovieDetailActivity.this);
-                          Call<Movie> call = api.postUserFavorites("account_id", session, "json/application", favoriteMoviePost);
+                          Call<Movie> call = api.postUserFavorites("account_id", session, favoriteMoviePost);
                           call.enqueue(new Callback<Movie>() {
                               @Override
                               public void onResponse(Call<Movie> call, Response<Movie> response) {
                                   if (response.code() == 201) {
                                       model = response.body();
+                                      apiCalls.GetListFavorites();
                                   }
+                                  Handler handler = new Handler();
+                                  handler.postDelayed(new Runnable() {
+                                      @Override
+                                      public void run() {
+                                          pd1.dismiss();
+                                      }
+                                  },2000);
+
                               }
 
                               @Override
                               public void onFailure(Call<Movie> call, Throwable t) {
                               }
                           });
+
                       } else {
+                          pd1.show();
                           Picasso.with(ScrollingMovieDetailActivity.this).load(R.drawable.favourites_empty_hdpi).into(favorite);
                           favklik = "no";
                           FavoriteMoviePost favoriteMoviePost = new FavoriteMoviePost();
@@ -400,20 +415,28 @@ public class ScrollingMovieDetailActivity extends AppCompatActivity {
                           favoriteMoviePost.media_id = movieID;
                           favoriteMoviePost.media_type = "movie";
                           RestApi api = new RestApi(ScrollingMovieDetailActivity.this);
-                          Call<Movie> call = api.postUserFavorites("account_id", session, "json/application", favoriteMoviePost);
+                          Call<Movie> call = api.postUserFavorites("account_id", session, favoriteMoviePost);
                           call.enqueue(new Callback<Movie>() {
                               @Override
                               public void onResponse(Call<Movie> call, Response<Movie> response) {
                                   if (response.code() == 200) {
                                       model = response.body();
-
+                                      apiCalls.GetListFavorites();
                                   }
+                                  Handler handler = new Handler();
+                                  handler.postDelayed(new Runnable() {
+                                      @Override
+                                      public void run() {
+                                          pd1.dismiss();
+                                      }
+                                  },2000);
                               }
 
                               @Override
                               public void onFailure(Call<Movie> call, Throwable t) {
                               }
                           });
+
                       }
 
                   }else { Toast.makeText(ScrollingMovieDetailActivity.this, "Please login to use this function", Toast.LENGTH_SHORT).show();}
@@ -429,6 +452,7 @@ public class ScrollingMovieDetailActivity extends AppCompatActivity {
                   if (!session.isEmpty()){
                       int acc_id = LogInPreferences.getAccountID(ScrollingMovieDetailActivity.this);
                       if (watchklik.equals("no")) {
+                          pd1.show();
                           Picasso.with(ScrollingMovieDetailActivity.this).load(R.drawable.watchlist_remove_hdpi).into(watchlist);
                           watchklik = "yes";
                           WatchlistMoviePost watchlistMoviePost = new WatchlistMoviePost();
@@ -436,41 +460,62 @@ public class ScrollingMovieDetailActivity extends AppCompatActivity {
                           watchlistMoviePost.media_id = movieID;
                           watchlistMoviePost.media_type = "movie";
                           RestApi api = new RestApi(ScrollingMovieDetailActivity.this);
-                          Call<Movie> call = api.postUserWatchlist("account_id", session, "json/application", watchlistMoviePost);
+                          Call<Movie> call = api.postUserWatchlist("account_id", session, watchlistMoviePost);
                           call.enqueue(new Callback<Movie>() {
                               @Override
                               public void onResponse(Call<Movie> call, Response<Movie> response) {
                                   if (response.code() == 201) {
                                       model = response.body();
-                                  }
+                                      apiCalls.getWatchList();
+
+                              }
+
+                                  Handler handler = new Handler();
+                                  handler.postDelayed(new Runnable() {
+                                      @Override
+                                      public void run() {
+                                          pd1.dismiss();
+                                      }
+                                  },2000);
                               }
 
                               @Override
                               public void onFailure(Call<Movie> call, Throwable t) {
                               }
                           });
+
                       } else {
+                          pd1.show();
                           Picasso.with(ScrollingMovieDetailActivity.this).load(R.drawable.watchlist_add_hdpi).into(watchlist);
                           favklik = "no";
                           WatchlistMoviePost watchlistMoviePost = new WatchlistMoviePost();
-                          watchlistMoviePost.watchlist = true;
+                          watchlistMoviePost.watchlist = false;
                           watchlistMoviePost.media_id = movieID;
                           watchlistMoviePost.media_type = "movie";
                           RestApi api = new RestApi(ScrollingMovieDetailActivity.this);
-                          Call<Movie> call = api.postUserWatchlist("account_id", session, "json/application", watchlistMoviePost);
+                          Call<Movie> call = api.postUserWatchlist("account_id", session, watchlistMoviePost);
                           call.enqueue(new Callback<Movie>() {
                               @Override
                               public void onResponse(Call<Movie> call, Response<Movie> response) {
                                   if (response.code() == 200) {
                                       model = response.body();
-
+                                      apiCalls.getWatchList();
                                   }
+                                  Handler handler = new Handler();
+                                  handler.postDelayed(new Runnable() {
+                                      @Override
+                                      public void run() {
+                                          pd1.dismiss();
+                                      }
+                                  },2000);
                               }
 
                               @Override
                               public void onFailure(Call<Movie> call, Throwable t) {
                               }
                           });
+
+
                       }
                   }else {
                       Toast.makeText(ScrollingMovieDetailActivity.this, "Please login to use this function", Toast.LENGTH_SHORT).show();
@@ -539,10 +584,11 @@ public class ScrollingMovieDetailActivity extends AppCompatActivity {
                         rated.value = rate;
                         rated.id = movieID;
                         RestApi api = new RestApi(ScrollingMovieDetailActivity.this);
-                        Call<Movie> call = api.postUserRateing(movieID, session, "json/application", rated);
+                        Call<Movie> call = api.postUserRateing(movieID, session, rated);
                         call.enqueue(new Callback<Movie>() {
                             @Override
                             public void onResponse(Call<Movie> call, Response<Movie> response) {
+                                pd1.show();
                                 if (response.code() == 201) {
                                     model = response.body();
                                     ratedList.ratedMovies.add(rated);
@@ -550,6 +596,14 @@ public class ScrollingMovieDetailActivity extends AppCompatActivity {
                                     rankDialog.dismiss();
                                     ratiingtxt.setText("" + rated.value);
                                 }
+                                Handler handler = new Handler();
+                                handler.postDelayed(new Runnable() {
+                                    @Override
+                                    public void run() {
+                                        pd1.dismiss();
+                                    }
+                                },2000);
+
                             }
 
                             @Override

@@ -11,6 +11,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.Toast;
 
 import com.znaci.goran.moviesaplikacija.R;
 import com.znaci.goran.moviesaplikacija.activities.AdvancedSearchActivity;
@@ -116,7 +117,19 @@ public class PopularFragment extends Fragment {
 
     }
 
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (resultCode == getActivity().RESULT_OK && requestCode == 1111){
+            adapter.notifyDataSetChanged();
 
+        }
+    }
 
-
+    @Override
+    public void onResume() {
+        super.onResume();
+        if (adapter != null) {
+            adapter.notifyDataSetChanged();
+        }
+    }
 }

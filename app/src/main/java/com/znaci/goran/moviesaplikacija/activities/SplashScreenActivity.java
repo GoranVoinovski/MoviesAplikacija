@@ -25,6 +25,7 @@ public class SplashScreenActivity extends AppCompatActivity {
     String session = "";
     String token = "";
     MovieModel movieModel;
+    ApiCalls apiCalls;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -33,8 +34,14 @@ public class SplashScreenActivity extends AppCompatActivity {
         final ApiCalls calls = new ApiCalls(this);
         Picasso.with(this).load(R.drawable.movieicon).centerInside().fit().into(icon);
 
+
+
         session = LogInPreferences.getSessionID(SplashScreenActivity.this);
         token = LogInPreferences.getUserID(this);
+        calls.GetListFavorites();
+        calls.getWatchList();
+        calls.GetListShowsFavorites();
+        calls.getWatchListShows();
 
         new Handler().postDelayed(new Runnable(){
             @Override
@@ -55,4 +62,6 @@ public class SplashScreenActivity extends AppCompatActivity {
 
 
     }
+
+
 }

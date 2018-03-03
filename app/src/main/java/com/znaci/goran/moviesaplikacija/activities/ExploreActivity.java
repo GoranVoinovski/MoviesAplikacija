@@ -24,6 +24,7 @@ import android.view.MenuItem;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.znaci.goran.moviesaplikacija.R;
 import com.znaci.goran.moviesaplikacija.adapters.ExplorePagerAdapter;
@@ -268,32 +269,6 @@ public class ExploreActivity extends AppCompatActivity
             @Override
             public void onFailure(Call<MovieModel> call, Throwable t) {
             }});}
-
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        if (resultCode == RESULT_OK && requestCode == 1111){
-            String session_id = LogInPreferences.getSessionID(this);
-            pd.show();
-            RestApi api = new RestApi(ExploreActivity.this);
-            Call<MovieModel> call = api.getUserFavorites("account_id",session_id);
-            call.enqueue(new Callback<MovieModel>() {
-                @Override
-                public void onResponse(Call<MovieModel> call, Response<MovieModel> response) {
-                    if (response.code() == 200) {
-                        movieModel = response.body();
-                        adapter2 = new RecyclerViewPopularAdapter(ExploreActivity.this, new OnRowMovieClickListener() {
-                            @Override
-                            public void onRowClick(Movie movie, int position) {
-                            }});
-                        adapter2.setItems(movieModel.results);
-                        layoutSearch.setHasFixedSize(true);
-                        layoutSearch.setLayoutManager(new GridLayoutManager(ExploreActivity.this,2));
-                        layoutSearch.setAdapter(adapter2);
-                        pd.dismiss();
-                    }}
-                @Override
-                public void onFailure(Call<MovieModel> call, Throwable t) {
-                }});}}
 
     public String getURLForResource (int resourceId) {
         return Uri.parse("android.resource://"+R.class.getPackage().getName()+"/" +resourceId).toString();
