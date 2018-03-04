@@ -9,6 +9,6 @@ import java.util.ArrayList;
 
 public class RatedList implements Serializable{
 
-  public ArrayList<Rated> ratedMovies;
+  public ArrayList<Rated> ratedMovies = new ArrayList<>();
 
 }

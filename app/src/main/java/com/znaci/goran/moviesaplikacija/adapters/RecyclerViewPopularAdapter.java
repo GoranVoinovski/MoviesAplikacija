@@ -1,12 +1,15 @@
 package com.znaci.goran.moviesaplikacija.adapters;
 
+import android.app.ProgressDialog;
 import android.content.Context;
+import android.os.Handler;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.squareup.picasso.Picasso;
 import com.squareup.picasso.Target;
@@ -14,8 +17,10 @@ import com.znaci.goran.moviesaplikacija.R;
 import com.znaci.goran.moviesaplikacija.activities.ExploreActivity;
 import com.znaci.goran.moviesaplikacija.activities.ScrollingMovieDetailActivity;
 import com.znaci.goran.moviesaplikacija.api.RestApi;
+import com.znaci.goran.moviesaplikacija.helpers.ApiCalls;
 import com.znaci.goran.moviesaplikacija.listeners.OnRowMovieClickListener;
 import com.znaci.goran.moviesaplikacija.models.FavoriteModel;
+import com.znaci.goran.moviesaplikacija.models.FavoriteMoviePost;
 import com.znaci.goran.moviesaplikacija.models.Movie;
 import com.znaci.goran.moviesaplikacija.models.MovieModel;
 import com.znaci.goran.moviesaplikacija.models.Rated;
@@ -44,6 +49,7 @@ public class RecyclerViewPopularAdapter extends RecyclerView.Adapter<RecyclerVie
     FavoriteModel model;
     WatchModel watchModel;
     RatedList ratedList;
+
 
     public RecyclerViewPopularAdapter (Context context,OnRowMovieClickListener _onRowMovieClickListener) {
         this.context = context;
@@ -131,6 +137,21 @@ public class RecyclerViewPopularAdapter extends RecyclerView.Adapter<RecyclerVie
             @Override
             public void onClick(View v) {
                 onRowMovieClickListener.onRowClick(movie,position);
+            }
+        });
+
+        holder.fav.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                onRowMovieClickListener.onRowFavClick(movie,position,holder.fav);
+
+            }
+        });
+
+        holder.wtch.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                onRowMovieClickListener.onRowWatchClick(movie,position,holder.wtch);
             }
         });
 

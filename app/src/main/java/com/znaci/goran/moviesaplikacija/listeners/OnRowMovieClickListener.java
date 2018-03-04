@@ -1,5 +1,7 @@
 package com.znaci.goran.moviesaplikacija.listeners;
 
+import android.widget.TextView;
+
 import com.znaci.goran.moviesaplikacija.models.Movie;
 
 /**
@@ -8,4 +10,6 @@ import com.znaci.goran.moviesaplikacija.models.Movie;
 
 public interface OnRowMovieClickListener {
     public void onRowClick(Movie movie, int position);
+    public void onRowFavClick(Movie movie, int position, TextView tv);
+    public void onRowWatchClick(Movie movie, int position, TextView tv);
 }

@@ -2,6 +2,7 @@ package com.znaci.goran.moviesaplikacija.activities;
 
 import android.app.ProgressDialog;
 import android.content.Intent;
+import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.GridLayoutManager;
@@ -11,6 +12,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.squareup.picasso.Picasso;
 import com.squareup.picasso.Target;
@@ -19,13 +21,16 @@ import com.znaci.goran.moviesaplikacija.adapters.RecyclerViewGenretAdapter;
 import com.znaci.goran.moviesaplikacija.adapters.RecyclerViewPopularAdapter;
 import com.znaci.goran.moviesaplikacija.adapters.RecyclerViewYeartAdapter;
 import com.znaci.goran.moviesaplikacija.api.RestApi;
+import com.znaci.goran.moviesaplikacija.helpers.ApiCalls;
 import com.znaci.goran.moviesaplikacija.listeners.OnRowGenreClickListener;
 import com.znaci.goran.moviesaplikacija.listeners.OnRowMovieClickListener;
 import com.znaci.goran.moviesaplikacija.listeners.OnRowYearClickListener;
+import com.znaci.goran.moviesaplikacija.models.FavoriteMoviePost;
 import com.znaci.goran.moviesaplikacija.models.Genre;
 import com.znaci.goran.moviesaplikacija.models.GenresModel;
 import com.znaci.goran.moviesaplikacija.models.Movie;
 import com.znaci.goran.moviesaplikacija.models.MovieModel;
+import com.znaci.goran.moviesaplikacija.preferencesManager.LogInPreferences;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -57,6 +62,7 @@ public class AdvancedSearchActivity extends AppCompatActivity {
     boolean hidden = false;
     int c = 1;
     ProgressDialog pd;
+    ApiCalls apiCalls = new ApiCalls(this);
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -94,6 +100,16 @@ public class AdvancedSearchActivity extends AppCompatActivity {
                                     intent.putExtra("id", movie.id);
                                     intent.putExtra("position", position);
                                     startActivityForResult(intent, 1111);
+                                }
+
+                                @Override
+                                public void onRowFavClick(Movie movie, int position, TextView tv) {
+                                    apiCalls.FavoriteListener(movie.id,tv);
+                                }
+
+                                @Override
+                                public void onRowWatchClick(Movie movie, int position, TextView tv) {
+                                    apiCalls.WatchlistListener(movie.id,tv);
                                 }
                             });
                             adapter.setItems(model3.results);
@@ -179,6 +195,16 @@ public class AdvancedSearchActivity extends AppCompatActivity {
                                                 intent.putExtra("position",position);
                                                 startActivityForResult(intent,1111);
                                             }
+
+                                            @Override
+                                            public void onRowFavClick(Movie movie, int position, TextView tv) {
+                                                        apiCalls.FavoriteListener(movie.id,tv);
+                                            }
+
+                                            @Override
+                                            public void onRowWatchClick(Movie movie, int position, TextView tv) {
+                                                apiCalls.WatchlistListener(movie.id,tv);
+                                            }
                                         });
                                         adapter.setItems(model3.results);
                                         rv.setHasFixedSize(true);
@@ -258,6 +284,16 @@ public class AdvancedSearchActivity extends AppCompatActivity {
                                 intent.putExtra("id",movie.id);
                                 intent.putExtra("position",position);
                                 startActivityForResult(intent,1111);
+                            }
+
+                            @Override
+                            public void onRowFavClick(Movie movie, int position, TextView tv) {
+                                 apiCalls.FavoriteListener(movie.id,tv);
+                            }
+
+                            @Override
+                            public void onRowWatchClick(Movie movie, int position, TextView tv) {
+                                apiCalls.WatchlistListener(movie.id,tv);
                             }
                         });
                         adapter.setItems(model3.results);

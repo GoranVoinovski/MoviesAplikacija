@@ -36,6 +36,7 @@ import com.znaci.goran.moviesaplikacija.fragments.TopRatedFragment;
 import com.znaci.goran.moviesaplikacija.fragments.UpcomingFragment;
 import com.znaci.goran.moviesaplikacija.helpers.ApiCalls;
 import com.znaci.goran.moviesaplikacija.listeners.OnRowMovieClickListener;
+import com.znaci.goran.moviesaplikacija.models.FavoriteMoviePost;
 import com.znaci.goran.moviesaplikacija.models.Movie;
 import com.znaci.goran.moviesaplikacija.models.MovieModel;
 import com.znaci.goran.moviesaplikacija.preferencesManager.LogInPreferences;
@@ -218,6 +219,12 @@ public class ExploreActivity extends AppCompatActivity
             if (itemLog.equals("Logout")){
                 LogInPreferences.removeUserID(ExploreActivity.this);
                 LogInPreferences.removeSessionID(ExploreActivity.this);
+                LogInPreferences.removeFavoriteList(ExploreActivity.this);
+                LogInPreferences.removeWtchList(ExploreActivity.this);
+                LogInPreferences.removeRated(ExploreActivity.this);
+                LogInPreferences.removeFavoriteListShows(ExploreActivity.this);
+                LogInPreferences.removeWtchListShows(ExploreActivity.this);
+                LogInPreferences.removeRatedShow(ExploreActivity.this);
                 Intent intent = new Intent(ExploreActivity.this,LoginActivity.class);
                 startActivity(intent);
                 finish();
@@ -260,7 +267,19 @@ public class ExploreActivity extends AppCompatActivity
                             intent.putExtra("id",movie.id);
                             intent.putExtra("position",position);
                             startActivityForResult(intent,1111);
-                        }});
+                        }
+
+                        @Override
+                        public void onRowFavClick(Movie movie, int position, TextView tv) {
+                                apiCalls.FavoriteListener(movie.id,tv);
+                        }
+
+                        @Override
+                        public void onRowWatchClick(Movie movie, int position, TextView tv) {
+                            apiCalls.WatchlistListener(movie.id,tv);
+                        }
+
+                    });
                     adapter2.setItems(movieModel.results);
                     layoutSearch.setHasFixedSize(true);
                     layoutSearch.setLayoutManager(new GridLayoutManager(ExploreActivity.this,2));

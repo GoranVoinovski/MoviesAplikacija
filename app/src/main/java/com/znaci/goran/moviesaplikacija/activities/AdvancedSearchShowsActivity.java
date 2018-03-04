@@ -15,9 +15,10 @@ import android.widget.TextView;
 import com.znaci.goran.moviesaplikacija.R;
 import com.znaci.goran.moviesaplikacija.adapters.RecyclerViewGenretAdapter;
 import com.znaci.goran.moviesaplikacija.adapters.RecyclerViewPopularAdapter;
-import com.znaci.goran.moviesaplikacija.adapters.RecyclerViewPopularShowsAdapter;
+import com.znaci.goran.moviesaplikacija.adapters.RecyclerViewShowsAdapter;
 import com.znaci.goran.moviesaplikacija.adapters.RecyclerViewYeartAdapter;
 import com.znaci.goran.moviesaplikacija.api.RestApi;
+import com.znaci.goran.moviesaplikacija.helpers.ApiCalls;
 import com.znaci.goran.moviesaplikacija.listeners.OnRowGenreClickListener;
 import com.znaci.goran.moviesaplikacija.listeners.OnRowMovieClickListener;
 import com.znaci.goran.moviesaplikacija.listeners.OnRowShowClickListener;
@@ -54,7 +55,7 @@ public class AdvancedSearchShowsActivity extends AppCompatActivity {
     @BindView(R.id.textsearch)
     TextView txtSearch;
     RecyclerViewGenretAdapter adapterGenre;
-    RecyclerViewPopularShowsAdapter adapter;
+    RecyclerViewShowsAdapter adapter;
     RecyclerViewYeartAdapter adapterYear;
     GenresModel modelGenre = new GenresModel();
     ShowsModel model2 = new ShowsModel();
@@ -62,12 +63,14 @@ public class AdvancedSearchShowsActivity extends AppCompatActivity {
     boolean hidden = false;
     int c = 1;
     ProgressDialog pd;
+    ApiCalls apiCalls;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_advanced_search_shows);
         ButterKnife.bind(this);
+        apiCalls = new ApiCalls(this);
         pd = new ProgressDialog(AdvancedSearchShowsActivity.this);
         pd.setMessage("loading");
         closeSearch.setBackgroundResource(R.mipmap.nothidden);
@@ -89,13 +92,23 @@ public class AdvancedSearchShowsActivity extends AppCompatActivity {
                         if (response.code() == 200) {
 
                             model3 = response.body();
-                            adapter = new RecyclerViewPopularShowsAdapter(AdvancedSearchShowsActivity.this, new OnRowShowClickListener() {
+                            adapter = new RecyclerViewShowsAdapter(AdvancedSearchShowsActivity.this, new OnRowShowClickListener() {
                                 @Override
                                 public void onRowClick(Shows shows, int position) {
                                     Intent intent = new Intent(AdvancedSearchShowsActivity.this, ScrollingShowsDetailActivity.class);
                                     intent.putExtra("showid", shows.id);
                                     intent.putExtra("position", position);
                                     startActivityForResult(intent, 1111);
+                                }
+
+                                @Override
+                                public void onRowFavClick(Shows movie, int position, TextView tv) {
+                                    apiCalls.FavoriteShowsListener(movie.id,tv);
+                                }
+
+                                @Override
+                                public void onRowWatchClick(Shows movie, int position, TextView tv) {
+                                    apiCalls.WatchlistShowsListener(movie.id,tv);
                                 }
                             });
                             adapter.setItems(model3.results);
@@ -170,13 +183,23 @@ public class AdvancedSearchShowsActivity extends AppCompatActivity {
                                     if (response.code() == 200) {
 
                                         model3 = response.body();
-                                        adapter = new RecyclerViewPopularShowsAdapter(AdvancedSearchShowsActivity.this, new OnRowShowClickListener() {
+                                        adapter = new RecyclerViewShowsAdapter(AdvancedSearchShowsActivity.this, new OnRowShowClickListener() {
                                             @Override
                                             public void onRowClick(Shows shows, int position) {
                                                 Intent intent = new Intent(AdvancedSearchShowsActivity.this, ScrollingShowsDetailActivity.class);
                                                 intent.putExtra("showid", shows.id);
                                                 intent.putExtra("position", position);
                                                 startActivityForResult(intent, 1111);
+                                            }
+
+                                            @Override
+                                            public void onRowFavClick(Shows movie, int position, TextView tv) {
+                                                apiCalls.FavoriteShowsListener(movie.id,tv);
+                                            }
+
+                                            @Override
+                                            public void onRowWatchClick(Shows movie, int position, TextView tv) {
+                                                apiCalls.WatchlistShowsListener(movie.id,tv);
                                             }
                                         });
                                         adapter.setItems(model3.results);
@@ -253,13 +276,23 @@ public class AdvancedSearchShowsActivity extends AppCompatActivity {
                     if (response.code() == 200) {
 
                         model3 = response.body();
-                        adapter = new RecyclerViewPopularShowsAdapter(AdvancedSearchShowsActivity.this, new OnRowShowClickListener() {
+                        adapter = new RecyclerViewShowsAdapter(AdvancedSearchShowsActivity.this, new OnRowShowClickListener() {
                             @Override
                             public void onRowClick(Shows shows, int position) {
                                 Intent intent = new Intent(AdvancedSearchShowsActivity.this, ScrollingShowsDetailActivity.class);
                                 intent.putExtra("showid", shows.id);
                                 intent.putExtra("position", position);
                                 startActivityForResult(intent, 1111);
+                            }
+
+                            @Override
+                            public void onRowFavClick(Shows movie, int position, TextView tv) {
+                                apiCalls.FavoriteShowsListener(movie.id,tv);
+                            }
+
+                            @Override
+                            public void onRowWatchClick(Shows movie, int position, TextView tv) {
+                                apiCalls.WatchlistShowsListener(movie.id,tv);
                             }
                         });
                         adapter.setItems(model3.results);

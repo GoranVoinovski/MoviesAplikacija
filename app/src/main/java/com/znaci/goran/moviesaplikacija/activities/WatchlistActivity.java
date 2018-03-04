@@ -6,10 +6,12 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.widget.TextView;
 
 import com.znaci.goran.moviesaplikacija.R;
 import com.znaci.goran.moviesaplikacija.adapters.RecyclerViewPopularAdapter;
 import com.znaci.goran.moviesaplikacija.api.RestApi;
+import com.znaci.goran.moviesaplikacija.helpers.ApiCalls;
 import com.znaci.goran.moviesaplikacija.listeners.OnRowMovieClickListener;
 import com.znaci.goran.moviesaplikacija.models.Movie;
 import com.znaci.goran.moviesaplikacija.models.MovieModel;
@@ -27,6 +29,7 @@ public class WatchlistActivity extends AppCompatActivity {
     RecyclerViewPopularAdapter adapter;
     MovieModel movieModel;
     ProgressDialog pd;
+    ApiCalls apiCalls = new ApiCalls(this);
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -53,6 +56,16 @@ public class WatchlistActivity extends AppCompatActivity {
                                 intent.putExtra("id",movie.id);
                                 intent.putExtra("position",position);
                                 startActivityForResult(intent,1111);
+                            }
+
+                            @Override
+                            public void onRowFavClick(Movie movie, int position, TextView tv) {
+                                apiCalls.FavoriteListener(movie.id,tv);
+                            }
+
+                            @Override
+                            public void onRowWatchClick(Movie movie, int position, TextView tv) {
+                                apiCalls.WatchlistListener(movie.id,tv);
                             }
                         });
                         adapter.setItems(movieModel.results);

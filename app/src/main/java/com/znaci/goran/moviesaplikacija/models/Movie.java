@@ -20,6 +20,7 @@ public class Movie implements Serializable{
   public boolean watchlist;
   public boolean favorite;
   public CreditsModel credits;
+  public float rating;
   public ArrayList<Genre>genres;
   transient boolean favorites;
 

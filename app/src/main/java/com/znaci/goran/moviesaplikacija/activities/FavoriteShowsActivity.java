@@ -6,11 +6,13 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.widget.TextView;
 
 import com.znaci.goran.moviesaplikacija.R;
 import com.znaci.goran.moviesaplikacija.adapters.RecyclerViewPopularAdapter;
 import com.znaci.goran.moviesaplikacija.adapters.RecyclerViewShowsAdapter;
 import com.znaci.goran.moviesaplikacija.api.RestApi;
+import com.znaci.goran.moviesaplikacija.helpers.ApiCalls;
 import com.znaci.goran.moviesaplikacija.listeners.OnRowMovieClickListener;
 import com.znaci.goran.moviesaplikacija.listeners.OnRowShowClickListener;
 import com.znaci.goran.moviesaplikacija.models.Movie;
@@ -30,12 +32,14 @@ public class FavoriteShowsActivity extends AppCompatActivity {
     RecyclerViewShowsAdapter adapter;
     ShowsModel showModel;
     ProgressDialog pd;
+    ApiCalls apiCalls;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_favorite_shows);
         ButterKnife.bind(this);
+        apiCalls = new ApiCalls(this);
         pd = new ProgressDialog(FavoriteShowsActivity.this);
         pd.setMessage("loading");
 
@@ -57,6 +61,16 @@ public class FavoriteShowsActivity extends AppCompatActivity {
                                 intent.putExtra("showid",shows.id);
                                 intent.putExtra("position",position);
                                 startActivityForResult(intent,1111);}
+
+                            @Override
+                            public void onRowFavClick(Shows movie, int position, TextView tv) {
+                                apiCalls.FavoriteShowsListener(movie.id,tv);
+                            }
+
+                            @Override
+                            public void onRowWatchClick(Shows movie, int position, TextView tv) {
+                                apiCalls.WatchlistShowsListener(movie.id,tv);
+                            }
                         });
                         adapter.setItems(showModel.results);
                         favoriteMovies.setHasFixedSize(true);

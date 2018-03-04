@@ -62,7 +62,7 @@ public class RecyclerViewShowsAdapter extends RecyclerView.Adapter<RecyclerViewS
     }
 
     @Override
-    public void onBindViewHolder(RecyclerViewShowsAdapter.ViewHolder holder, final int position) {
+    public void onBindViewHolder(final RecyclerViewShowsAdapter.ViewHolder holder, final int position) {
         final Shows show = results.get(position);
         model2 = LogInPreferences.getFavoriteListShows(context);
         watchModel = LogInPreferences.getWtchListShows(context);
@@ -121,6 +121,20 @@ public class RecyclerViewShowsAdapter extends RecyclerView.Adapter<RecyclerViewS
             @Override
             public void onClick(View v) {
                 onRowMovieClickListener.onRowClick(show,position);
+            }
+        });
+        holder.fav.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                onRowMovieClickListener.onRowFavClick(show,position,holder.fav);
+
+            }
+        });
+
+        holder.wtch.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                onRowMovieClickListener.onRowWatchClick(show,position,holder.wtch);
             }
         });
     }

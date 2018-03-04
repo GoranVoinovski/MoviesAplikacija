@@ -1,12 +1,13 @@
 package com.znaci.goran.moviesaplikacija.models;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
 /**
  * Created by Goran on 2/11/2018.
  */
 
-public class Shows {
+public class Shows implements Serializable{
 
     public int id;
     public float vote_average;
@@ -20,6 +21,7 @@ public class Shows {
     public int number_of_episodes;
     public int number_of_seasons;
     public String status;
+    public float rating;
     public boolean favorite;
     public boolean watchlist;
     public CreditsModel credits;

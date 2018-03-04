@@ -354,6 +354,16 @@ public class ScrollingMovieDetailActivity extends AppCompatActivity {
                         startActivity(intent);
                         finish();
                     }
+
+                    @Override
+                    public void onRowFavClick(Movie movie, int position, TextView tv) {
+                     apiCalls.FavoriteListener(movie.id,tv);
+                    }
+
+                    @Override
+                    public void onRowWatchClick(Movie movie, int position, TextView tv) {
+                        apiCalls.WatchlistListener(movie.id,tv);
+                    }
                 });
                 adapter.setItems(movieModel.results);
                 similarMovierv.setHasFixedSize(true);

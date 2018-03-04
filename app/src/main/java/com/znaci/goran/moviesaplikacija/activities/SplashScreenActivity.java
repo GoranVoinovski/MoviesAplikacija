@@ -42,7 +42,8 @@ public class SplashScreenActivity extends AppCompatActivity {
         calls.getWatchList();
         calls.GetListShowsFavorites();
         calls.getWatchListShows();
-
+        calls.RatedMovies();
+        calls.RatedShows();
         new Handler().postDelayed(new Runnable(){
             @Override
             public void run() {

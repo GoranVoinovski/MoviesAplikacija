@@ -68,6 +68,12 @@ public class LoginActivity extends AppCompatActivity {
 
                                             user = response.body();
                                             LogInPreferences.setSessionID(user.session_id,LoginActivity.this);
+                                            apiCalls.GetListFavorites();
+                                            apiCalls.getWatchList();
+                                            apiCalls.GetListShowsFavorites();
+                                            apiCalls.getWatchListShows();
+                                            apiCalls.RatedMovies();
+                                            apiCalls.RatedShows();
 
                                         }}
 

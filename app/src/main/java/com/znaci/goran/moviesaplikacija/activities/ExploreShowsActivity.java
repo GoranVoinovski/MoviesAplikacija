@@ -243,6 +243,16 @@ public class ExploreShowsActivity extends AppCompatActivity
                             intent.putExtra("position",position);
                             startActivityForResult(intent,1111);
                         }
+
+                        @Override
+                        public void onRowFavClick(Shows movie, int position, TextView tv) {
+                            apiCalls.FavoriteShowsListener(movie.id,tv);
+                    }
+
+                        @Override
+                        public void onRowWatchClick(Shows movie, int position, TextView tv) {
+                            apiCalls.WatchlistShowsListener(movie.id,tv);
+                        }
                     });
                     adapter2.setItems(showsModel.results);
                     layoutSearch.setHasFixedSize(true);

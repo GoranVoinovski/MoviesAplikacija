@@ -11,6 +11,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.TextView;
 
 import com.znaci.goran.moviesaplikacija.R;
 import com.znaci.goran.moviesaplikacija.activities.AdvancedSearchActivity;
@@ -18,6 +19,7 @@ import com.znaci.goran.moviesaplikacija.activities.ScrollingShowsDetailActivity;
 import com.znaci.goran.moviesaplikacija.activities.ShowDetailActivity;
 import com.znaci.goran.moviesaplikacija.adapters.RecyclerViewShowsAdapter;
 import com.znaci.goran.moviesaplikacija.api.RestApi;
+import com.znaci.goran.moviesaplikacija.helpers.ApiCalls;
 import com.znaci.goran.moviesaplikacija.listeners.OnRowShowClickListener;
 import com.znaci.goran.moviesaplikacija.models.Shows;
 import com.znaci.goran.moviesaplikacija.models.ShowsModel;
@@ -41,12 +43,14 @@ public class PopularShowsFragment extends Fragment{
     ShowsModel model2 = new ShowsModel();
     int c = 1;
     ProgressDialog pd;
+    ApiCalls apiCalls;
 
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.exploreactivity_fragments_layout, null);
         mUnbind = ButterKnife.bind(this, view);
+        apiCalls = new ApiCalls(getActivity());
         pd = new ProgressDialog(getActivity());
         pd.setMessage("loading");
         PopularShows();
@@ -107,7 +111,17 @@ public class PopularShowsFragment extends Fragment{
                             intent.putExtra("position",position);
                             startActivityForResult(intent,1111);
                         }
-                    });
+
+                                @Override
+                                public void onRowFavClick(Shows movie, int position, TextView tv) {
+                                    apiCalls.FavoriteShowsListener(movie.id,tv);
+                                }
+
+                                @Override
+                                public void onRowWatchClick(Shows movie, int position, TextView tv) {
+                                    apiCalls.WatchlistShowsListener(movie.id,tv);
+                                }
+                            });
                     adapter.setItems(model.results);
                     rv.setHasFixedSize(true);
                     rv.setLayoutManager(new GridLayoutManager(getActivity(),2));
