@@ -2,6 +2,8 @@ package com.znaci.goran.moviesaplikacija.activities;
 
 import android.app.ProgressDialog;
 import android.content.Intent;
+import android.content.IntentFilter;
+import android.net.ConnectivityManager;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
@@ -42,6 +44,7 @@ import com.znaci.goran.moviesaplikacija.fragments.TopRatedFragment;
 import com.znaci.goran.moviesaplikacija.fragments.TopRatedShowsFragment;
 import com.znaci.goran.moviesaplikacija.fragments.UpcomingFragment;
 import com.znaci.goran.moviesaplikacija.helpers.ApiCalls;
+import com.znaci.goran.moviesaplikacija.helpers.MyReceiver;
 import com.znaci.goran.moviesaplikacija.listeners.OnRowMovieClickListener;
 import com.znaci.goran.moviesaplikacija.listeners.OnRowShowClickListener;
 import com.znaci.goran.moviesaplikacija.models.Movie;
@@ -78,6 +81,7 @@ public class ExploreShowsActivity extends AppCompatActivity
     String itemLog = "";
     String session = "";
     ProgressDialog pd;
+    MyReceiver receiver;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -85,6 +89,8 @@ public class ExploreShowsActivity extends AppCompatActivity
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         ButterKnife.bind(this);
+        receiver = new MyReceiver();
+        registerReceiver(receiver, new IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION));
         pd = new ProgressDialog(ExploreShowsActivity.this);
         pd.setMessage("loading");
         apiCalls = new ApiCalls(this);

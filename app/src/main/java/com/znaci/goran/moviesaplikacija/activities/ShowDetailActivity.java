@@ -8,6 +8,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.squareup.picasso.Picasso;
 import com.znaci.goran.moviesaplikacija.R;
@@ -26,10 +27,6 @@ import retrofit2.Response;
 public class ShowDetailActivity extends AppCompatActivity {
     @BindView(R.id.nameShow)
     TextView nameOfShow;
-    @BindView(R.id.play)
-    TextView playShow;
-    @BindView(R.id.ShowVideo)
-    ImageView videoOfShow;
     @BindView(R.id.firstair)
     TextView showAirDate;
     @BindView(R.id.numberofepisodes)
@@ -84,11 +81,6 @@ public class ShowDetailActivity extends AppCompatActivity {
                             episodesOfShow.setText("Episodes: " + model.number_of_episodes + " Seasons: " + model.number_of_seasons);
                         }
 
-                        if (model.poster_path != null){
-                            String path = "http://image.tmdb.org/t/p/w185" + model.poster_path;
-                            Picasso.with(ShowDetailActivity.this).load(path).centerInside().fit().into(videoOfShow);
-                        }
-
                         RestApi api3 = new RestApi(ShowDetailActivity.this);
                         Call<VideoModel> call3 = api3.getShowVideo(movieID);
                         call3.enqueue(new Callback<VideoModel>() {
@@ -98,21 +90,21 @@ public class ShowDetailActivity extends AppCompatActivity {
                                     model2 = response.body();
                                     if (model2.results.size() == 0){}else {
                                         final Videos video = model2.results.get(0);
-                                        playShow.setOnClickListener(new View.OnClickListener() {
-                                            @Override
-                                            public void onClick(View v) {
-                                                startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("http://www.youtube.com/watch?v=" + video.key)));
-                                                Log.i("Video", "Video Playing....");
-                                            }
-                                        });}}}
+                                }}}
                             @Override
                             public void onFailure(Call<VideoModel> call, Throwable t) {
+                                if(t.getMessage().contains("Unable to resolve host"));
+                                Toast.makeText(ShowDetailActivity.this, "No internet connection", Toast.LENGTH_SHORT).show();
+                                finish();
                             }});
                     }
                 }
 
                 @Override
                 public void onFailure(Call<Shows> call, Throwable t) {
+                    if(t.getMessage().contains("Unable to resolve host"));
+                    Toast.makeText(ShowDetailActivity.this, "No internet connection", Toast.LENGTH_SHORT).show();
+                    finish();
                 }});
 
            }

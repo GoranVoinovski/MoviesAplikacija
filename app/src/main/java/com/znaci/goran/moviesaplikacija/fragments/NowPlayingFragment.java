@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -37,6 +38,7 @@ import retrofit2.Response;
 
 public class NowPlayingFragment extends Fragment{
     @BindView(R.id.RvExplore)RecyclerView rv;
+    @BindView(R.id.swipeRefresh)SwipeRefreshLayout swipe;
     RecyclerViewPopularAdapter adapter;
     private Unbinder mUnbind;
     MovieModel model = new MovieModel();
@@ -81,6 +83,16 @@ public class NowPlayingFragment extends Fragment{
 
                                 }
                             });}
+
+
+            }
+        });
+
+        swipe.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                PopularMoviesNowPlaying();
+                swipe.setRefreshing(false);
             }
         });
 
@@ -94,6 +106,7 @@ public class NowPlayingFragment extends Fragment{
     }
 
     public void PopularMoviesNowPlaying(){
+        c = 1;
         pd.show();
         RestApi api = new RestApi(getActivity());
         Call<MovieModel> call = api.getMovies("now_playing",c);

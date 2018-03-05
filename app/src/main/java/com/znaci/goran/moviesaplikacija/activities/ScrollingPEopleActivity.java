@@ -18,6 +18,7 @@ import android.text.format.DateFormat;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.squareup.picasso.Picasso;
 import com.znaci.goran.moviesaplikacija.R;
@@ -108,7 +109,9 @@ public class ScrollingPEopleActivity extends AppCompatActivity {
             }
             @Override
             public void onFailure(Call<Person> call, Throwable t) {
-
+                if(t.getMessage().contains("Unable to resolve host"));
+                Toast.makeText(ScrollingPEopleActivity.this, "No internet connection", Toast.LENGTH_SHORT).show();
+                finish();
             }
         });
     }
@@ -139,7 +142,9 @@ public class ScrollingPEopleActivity extends AppCompatActivity {
             }
             @Override
             public void onFailure(Call<CreditsModel> call, Throwable t) {
-
+                if(t.getMessage().contains("Unable to resolve host"));
+                Toast.makeText(ScrollingPEopleActivity.this, "No internet connection", Toast.LENGTH_SHORT).show();
+                finish();
             }
         });
     }

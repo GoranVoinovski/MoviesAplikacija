@@ -2,6 +2,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.znaci.goran.moviesaplikacija">
 
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.INTERNET" />
 
     <application
@@ -13,21 +14,45 @@
         android:theme="@style/AppTheme">
         <activity
             android:name=".activities.ExploreActivity"
-            android:screenOrientation="portrait"
             android:label="Explore Movies"
+            android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar" />
-        <activity android:name=".activities.LoginActivity" android:label="Login or Sign Up" android:screenOrientation="portrait" />
-        <activity android:name=".activities.FavoritesActivity" android:label="Favorite Movies" android:screenOrientation="portrait"/>
-        <activity android:name=".activities.RatedActivity" android:label="Rated Movies" android:screenOrientation="portrait"/>
-        <activity android:name=".activities.WatchlistActivity" android:label="Movies Watchlist" android:screenOrientation="portrait"/>
-        <activity android:name=".activities.PeopleActivity" android:label="People" android:screenOrientation="portrait"/>
+        <activity
+            android:name=".activities.LoginActivity"
+            android:label="Login or Sign Up"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activities.FavoritesActivity"
+            android:label="Favorite Movies"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activities.RatedActivity"
+            android:label="Rated Movies"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activities.RatedShowActivity"
+            android:label="Rated Movies"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activities.WatchlistActivity"
+            android:label="Movies Watchlist"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activities.PeopleActivity"
+            android:label="People"
+            android:screenOrientation="portrait" />
         <activity
             android:name=".activities.ExploreShowsActivity"
-            android:screenOrientation="portrait"
             android:label="Explore TV Shows"
+            android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar" />
-        <activity android:name=".activities.ShowDetailActivity" android:label="TV Show Details" android:screenOrientation="portrait"/>
-        <activity android:name=".activities.SplashScreenActivity" android:screenOrientation="portrait">
+        <activity
+            android:name=".activities.ShowDetailActivity"
+            android:label="TV Show Details"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activities.SplashScreenActivity"
+            android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -36,24 +61,40 @@
         </activity>
         <activity
             android:name=".activities.ScrollingPEopleActivity"
-            android:screenOrientation="portrait"
             android:label="People"
+            android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".activities.ScrollingMovieDetailActivity"
-            android:screenOrientation="portrait"
             android:label="Movie Details"
+            android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".activities.ScrollingShowsDetailActivity"
-            android:screenOrientation="portrait"
             android:label="TV Show Details"
+            android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar" />
-        <activity android:name=".activities.FavoriteShowsActivity" android:label="Favorite Movies" android:screenOrientation="portrait"/>
-        <activity android:name=".activities.WatchlistShowsActivity" android:label="TV Show Watchlist" android:screenOrientation="portrait"/>
-        <activity android:name=".activities.FullCastActivity" android:label="Cast and Crew" android:screenOrientation="portrait"/>
-        <activity android:name=".activities.AdvancedSearchActivity" android:label="Movie Search" android:screenOrientation="portrait"/>
-        <activity android:name=".activities.AdvancedSearchShowsActivity" android:label="TV Show Search" android:screenOrientation="portrait"></activity>
+        <activity
+            android:name=".activities.FavoriteShowsActivity"
+            android:label="Favorite Movies"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activities.WatchlistShowsActivity"
+            android:label="TV Show Watchlist"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activities.FullCastActivity"
+            android:label="Cast and Crew"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activities.AdvancedSearchActivity"
+            android:label="Movie Search"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activities.AdvancedSearchShowsActivity"
+            android:label="TV Show Search"
+            android:screenOrientation="portrait" />
+        <activity android:name=".activities.SlikiFragmentActivity" android:theme="@style/Theme.AppCompat.NoActionBar"></activity>
     </application>
 
 </manifest>

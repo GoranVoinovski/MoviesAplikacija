@@ -98,6 +98,9 @@ public class PeopleActivity extends AppCompatActivity {
                                         pd.dismiss();    }}
                                 @Override
                                 public void onFailure(Call<PersonModel> call, Throwable t) {
+                                    if(t.getMessage().contains("Unable to resolve host"));
+                                    Toast.makeText(PeopleActivity.this, "No internet connection", Toast.LENGTH_SHORT).show();
+                                    finish();
                                 }});}}});
 
     }
@@ -124,6 +127,9 @@ public class PeopleActivity extends AppCompatActivity {
                     peopleRV.setAdapter(adapter);}}
             @Override
             public void onFailure(Call<PersonModel> call, Throwable t) {
+                if(t.getMessage().contains("Unable to resolve host"));
+                Toast.makeText(PeopleActivity.this, "No internet connection", Toast.LENGTH_SHORT).show();
+                finish();
             }});}
 
     public void PeopleMovieSearch() {
@@ -149,7 +155,9 @@ public class PeopleActivity extends AppCompatActivity {
             }
             @Override
             public void onFailure(Call<PersonModel> call, Throwable t) {
-                Toast.makeText(PeopleActivity.this, "Fail", Toast.LENGTH_SHORT).show();
+                if(t.getMessage().contains("Unable to resolve host"));
+                Toast.makeText(PeopleActivity.this, "No internet connection", Toast.LENGTH_SHORT).show();
+                finish();
             }});}
 
     @Override

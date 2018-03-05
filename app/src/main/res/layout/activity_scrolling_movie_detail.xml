@@ -24,25 +24,13 @@
             app:layout_scrollFlags="scroll|exitUntilCollapsed"
             app:toolbarId="@+id/toolbar">
 
-            <FrameLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+            <android.support.v7.widget.RecyclerView
+                 android:id="@+id/rvImages"
+                 android:layout_width="match_parent"
+                 android:layout_height="match_parent">
 
-                <ImageView
-                    android:id="@+id/MovieVideo"
-                    android:layout_width="match_parent"
-                    android:layout_height="200dp"/>
+             </android.support.v7.widget.RecyclerView>
 
-                <TextView
-                    android:id="@+id/play"
-                    android:backgroundTint="@color/colorPrimaryDark"
-                    android:layout_gravity="center"
-                    android:paddingTop="30dp"
-                    android:background="@drawable/play"
-                    android:layout_width="100dp"
-                    android:layout_height="100dp" />
-
-            </FrameLayout>
 
             <android.support.v7.widget.Toolbar
                 android:id="@+id/toolbar"

@@ -62,10 +62,6 @@ public class ScrollingShowsDetailActivity extends AppCompatActivity {
     TextView nameOfShow;
     @BindView(R.id.ratingimg)
     ImageView ratingimg;
-    @BindView(R.id.play)
-    TextView playShow;
-    @BindView(R.id.ShowVideo)
-    ImageView videoOfShow;
     @BindView(R.id.firstair)
     TextView showAirDate;
     @BindView(R.id.numberofepisodes)
@@ -89,6 +85,8 @@ public class ScrollingShowsDetailActivity extends AppCompatActivity {
     RecyclerView genresRV;
     @BindView(R.id.movieavgrating)
     TextView movieavg;
+    @BindView(R.id.rvImages)
+    RecyclerView rvImage;
     RecyclerViewGenretAdapter adapterGenre;
     RecyclerViewSimilarShowsAdapter adapterSimilar;
     FloatingActionButton fab;
@@ -206,11 +204,6 @@ public class ScrollingShowsDetailActivity extends AppCompatActivity {
                             episodesOfShow.setText(" Episodes: " + model.number_of_episodes + "\n Seasons: " + model.number_of_seasons);
                         }
 
-                        if (model.backdrop_path != null){
-                            String path = "http://image.tmdb.org/t/p/w185" + model.backdrop_path;
-                            Picasso.with(ScrollingShowsDetailActivity.this).load(path).centerInside().fit().into(videoOfShow);
-                        }
-
                         adapterGenre = new RecyclerViewGenretAdapter(ScrollingShowsDetailActivity.this, new OnRowGenreClickListener() {
                             @Override
                             public void onRowClick(Genre genre, int position) {
@@ -243,6 +236,9 @@ public class ScrollingShowsDetailActivity extends AppCompatActivity {
                                         });}}}
                             @Override
                             public void onFailure(Call<VideoModel> call, Throwable t) {
+                                if(t.getMessage().contains("Unable to resolve host"));
+                                Toast.makeText(ScrollingShowsDetailActivity.this, "No internet connection", Toast.LENGTH_SHORT).show();
+                                finish();
                             }});}
                 }
 
@@ -254,7 +250,7 @@ public class ScrollingShowsDetailActivity extends AppCompatActivity {
             FavoriteListener();
             WatchlistListener();
             RatingListener();
-
+            apiCalls.GetShowsImages(movieID,rvImage);
 
         }}
 
@@ -304,6 +300,9 @@ public class ScrollingShowsDetailActivity extends AppCompatActivity {
 
             @Override
             public void onFailure(Call<ShowsModel> call, Throwable t) {
+                if(t.getMessage().contains("Unable to resolve host"));
+                Toast.makeText(ScrollingShowsDetailActivity.this, "No internet connection", Toast.LENGTH_SHORT).show();
+                finish();
             }
         });
     }
@@ -350,6 +349,9 @@ public class ScrollingShowsDetailActivity extends AppCompatActivity {
 
                         @Override
                         public void onFailure(Call<Shows> call, Throwable t) {
+                            if(t.getMessage().contains("Unable to resolve host"));
+                            Toast.makeText(ScrollingShowsDetailActivity.this, "No internet connection", Toast.LENGTH_SHORT).show();
+                            finish();
                         }
                     });
                 } else {
@@ -382,6 +384,9 @@ public class ScrollingShowsDetailActivity extends AppCompatActivity {
 
                         @Override
                         public void onFailure(Call<Shows> call, Throwable t) {
+                            if(t.getMessage().contains("Unable to resolve host"));
+                            Toast.makeText(ScrollingShowsDetailActivity.this, "No internet connection", Toast.LENGTH_SHORT).show();
+                            finish();
                         }
                     });
                 }
@@ -429,6 +434,9 @@ public class ScrollingShowsDetailActivity extends AppCompatActivity {
 
                             @Override
                             public void onFailure(Call<Shows> call, Throwable t) {
+                                if(t.getMessage().contains("Unable to resolve host"));
+                                Toast.makeText(ScrollingShowsDetailActivity.this, "No internet connection", Toast.LENGTH_SHORT).show();
+                                finish();
                             }
                         });
                     } else {
@@ -460,6 +468,9 @@ public class ScrollingShowsDetailActivity extends AppCompatActivity {
 
                             @Override
                             public void onFailure(Call<Shows> call, Throwable t) {
+                                if(t.getMessage().contains("Unable to resolve host"));
+                                Toast.makeText(ScrollingShowsDetailActivity.this, "No internet connection", Toast.LENGTH_SHORT).show();
+                                finish();
                             }
                         });
                     }
@@ -496,6 +507,9 @@ public class ScrollingShowsDetailActivity extends AppCompatActivity {
                 }}
             @Override
             public void onFailure(Call<Shows> call, Throwable t) {
+                if(t.getMessage().contains("Unable to resolve host"));
+                Toast.makeText(ScrollingShowsDetailActivity.this, "No internet connection", Toast.LENGTH_SHORT).show();
+                finish();
             }});}
 
     public void RatingListener() {
@@ -558,6 +572,9 @@ public class ScrollingShowsDetailActivity extends AppCompatActivity {
 
                             @Override
                             public void onFailure(Call<Shows> call, Throwable t) {
+                                if(t.getMessage().contains("Unable to resolve host"));
+                                Toast.makeText(ScrollingShowsDetailActivity.this, "No internet connection", Toast.LENGTH_SHORT).show();
+                                finish();
                             }});
 
 

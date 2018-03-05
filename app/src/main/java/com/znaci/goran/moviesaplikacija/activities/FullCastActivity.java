@@ -77,7 +77,9 @@ public class FullCastActivity extends AppCompatActivity {
             }
             @Override
             public void onFailure(Call<CreditsModel> call, Throwable t) {
-
+                if(t.getMessage().contains("Unable to resolve host"));
+                Toast.makeText(FullCastActivity.this, "No internet connection", Toast.LENGTH_SHORT).show();
+                finish();
             }});}
 
     public void PeopleShowSearch(int id) {
@@ -103,6 +105,9 @@ public class FullCastActivity extends AppCompatActivity {
             }
             @Override
             public void onFailure(Call<CreditsModel> call, Throwable t) {
+                if(t.getMessage().contains("Unable to resolve host"));
+                Toast.makeText(FullCastActivity.this, "No internet connection", Toast.LENGTH_SHORT).show();
+                finish();
 
             }});}
 

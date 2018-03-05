@@ -3,6 +3,7 @@ package com.znaci.goran.moviesaplikacija.api;
 import com.znaci.goran.moviesaplikacija.models.CreditsModel;
 import com.znaci.goran.moviesaplikacija.models.FavoriteMoviePost;
 import com.znaci.goran.moviesaplikacija.models.GenresModel;
+import com.znaci.goran.moviesaplikacija.models.ImageModel;
 import com.znaci.goran.moviesaplikacija.models.Movie;
 import com.znaci.goran.moviesaplikacija.models.MovieModel;
 import com.znaci.goran.moviesaplikacija.models.Person;
@@ -62,6 +63,9 @@ public interface ApiService {
     @GET("search/movie?" + ApiConstants.ApiKey)
     Call<MovieModel> getSearchMovie(@Query("query") String query);
 
+    @GET("movie/{movie_id}/images?" + ApiConstants.ApiKey)
+    Call<ImageModel> getMovieImages(@Path("movie_id") int link);
+
     //--------------------------------------------Shows------------------------------------------------------------------------------
     @GET("genre/tv/list?" + ApiConstants.ApiKey)
     Call<GenresModel> getTVGenres();
@@ -89,6 +93,9 @@ public interface ApiService {
 
     @GET("tv/{tv_id}/credits?" + ApiConstants.ApiKey)
     Call<CreditsModel> getShowCredits(@Path("tv_id") int link);
+
+    @GET("tv/{tv_id}/images?" + ApiConstants.ApiKey)
+    Call<ImageModel> getShowsImages(@Path("tv_id") int link);
 
     //--------------------------------------------Person------------------------------------------------------------------------------
 

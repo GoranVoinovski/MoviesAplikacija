@@ -5,11 +5,23 @@ android:layout_width="match_parent"
 android:background="@color/colorPrimary"
 android:layout_height="match_parent">
 
-<android.support.v7.widget.RecyclerView
-    android:layout_marginTop="55dp"
-    android:id="@+id/RvExplore"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent">
-</android.support.v7.widget.RecyclerView>
+    <android.support.v4.widget.SwipeRefreshLayout
+        android:id="@+id/swipeRefresh"
+        android:layout_marginTop="55dp"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/RvExplore"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+        </android.support.v7.widget.RecyclerView>
+
+
+
+    </android.support.v4.widget.SwipeRefreshLayout>
+
+
 
 </FrameLayout>

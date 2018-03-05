@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -37,6 +38,7 @@ import retrofit2.Response;
 
 public class AiringTodayFragment extends Fragment{
     @BindView(R.id.RvExplore)RecyclerView rv;
+    @BindView(R.id.swipeRefresh)SwipeRefreshLayout swipe;
     RecyclerViewShowsAdapter adapter;
     private Unbinder mUnbind;
     ShowsModel model = new ShowsModel();
@@ -79,6 +81,14 @@ public class AiringTodayFragment extends Fragment{
                                 }
                             });}}});
 
+        swipe.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                ShowsAiringToday();
+                swipe.setRefreshing(false);
+            }
+        });
+
         return view;
     }
 
@@ -89,6 +99,7 @@ public class AiringTodayFragment extends Fragment{
     }
 
     public void ShowsAiringToday(){
+        c = 1;
         pd.show();
         RestApi api = new RestApi(getActivity());
         Call<ShowsModel> call = api.getShows("airing_today",c);

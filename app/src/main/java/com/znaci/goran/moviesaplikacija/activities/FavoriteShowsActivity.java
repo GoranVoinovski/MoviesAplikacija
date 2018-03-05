@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.znaci.goran.moviesaplikacija.R;
 import com.znaci.goran.moviesaplikacija.adapters.RecyclerViewPopularAdapter;
@@ -79,6 +80,9 @@ public class FavoriteShowsActivity extends AppCompatActivity {
                         pd.dismiss();}}
                 @Override
                 public void onFailure(Call<ShowsModel> call, Throwable t) {
+                    if(t.getMessage().contains("Unable to resolve host"));
+                    Toast.makeText(FavoriteShowsActivity.this, "No internet connection", Toast.LENGTH_SHORT).show();
+                    finish();
                 }});
         }}
 }

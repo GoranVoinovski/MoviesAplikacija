@@ -114,6 +114,7 @@ public class LoginActivity extends AppCompatActivity {
 
             @Override
             public void onFailure(Call<User> call, Throwable t) {
+
             }});}
 
     @OnClick(R.id.forgotPass)

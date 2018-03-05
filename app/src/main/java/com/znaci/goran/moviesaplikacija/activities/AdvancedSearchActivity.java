@@ -139,6 +139,9 @@ public class AdvancedSearchActivity extends AppCompatActivity {
                                                 }}
                                             @Override
                                             public void onFailure(Call<MovieModel> call, Throwable t) {
+                                                if(t.getMessage().contains("Unable to resolve host"));
+                                                Toast.makeText(AdvancedSearchActivity.this, "No internet connection", Toast.LENGTH_SHORT).show();
+                                                finish();
                                             }});
                                     }}});
                         }
@@ -216,6 +219,9 @@ public class AdvancedSearchActivity extends AppCompatActivity {
 
                                 @Override
                                 public void onFailure(Call<MovieModel> call, Throwable t) {
+                                    if(t.getMessage().contains("Unable to resolve host"));
+                                    Toast.makeText(AdvancedSearchActivity.this, "No internet connection", Toast.LENGTH_SHORT).show();
+                                    finish();
 
                                 }
                             });
@@ -241,6 +247,9 @@ public class AdvancedSearchActivity extends AppCompatActivity {
                                                 }}
                                             @Override
                                             public void onFailure(Call<MovieModel> call, Throwable t) {
+                                                if(t.getMessage().contains("Unable to resolve host"));
+                                                Toast.makeText(AdvancedSearchActivity.this, "No internet connection", Toast.LENGTH_SHORT).show();
+                                                finish();
                                             }});
                                     }}});
 
@@ -255,9 +264,10 @@ public class AdvancedSearchActivity extends AppCompatActivity {
 
             @Override
             public void onFailure(Call<GenresModel> call, Throwable t) {
-
-            }
-        });
+                if(t.getMessage().contains("Unable to resolve host"));
+                Toast.makeText(AdvancedSearchActivity.this, "No internet connection", Toast.LENGTH_SHORT).show();
+                finish();
+            }});
 
 
         Intent genreIntent = AdvancedSearchActivity.this.getIntent();
@@ -306,7 +316,9 @@ public class AdvancedSearchActivity extends AppCompatActivity {
 
                 @Override
                 public void onFailure(Call<MovieModel> call, Throwable t) {
-
+                    if(t.getMessage().contains("Unable to resolve host"));
+                    Toast.makeText(AdvancedSearchActivity.this, "No internet connection", Toast.LENGTH_SHORT).show();
+                    finish();
                 }
             });
 
@@ -331,6 +343,9 @@ public class AdvancedSearchActivity extends AppCompatActivity {
                                 }}
                             @Override
                             public void onFailure(Call<MovieModel> call, Throwable t) {
+                                if(t.getMessage().contains("Unable to resolve host"));
+                                Toast.makeText(AdvancedSearchActivity.this, "No internet connection", Toast.LENGTH_SHORT).show();
+                                finish();
                             }});
                     }}});
         }

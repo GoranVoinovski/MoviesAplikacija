@@ -7,6 +7,8 @@ import android.net.Uri;
 import android.os.Handler;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.widget.GridLayoutManager;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
@@ -22,15 +24,20 @@ import com.znaci.goran.moviesaplikacija.activities.FavoritesActivity;
 import com.znaci.goran.moviesaplikacija.activities.RatedActivity;
 import com.znaci.goran.moviesaplikacija.activities.ScrollingMovieDetailActivity;
 import com.znaci.goran.moviesaplikacija.activities.ScrollingShowsDetailActivity;
+import com.znaci.goran.moviesaplikacija.activities.SlikiFragmentActivity;
 import com.znaci.goran.moviesaplikacija.activities.WatchlistActivity;
 import com.znaci.goran.moviesaplikacija.activities.WatchlistShowsActivity;
+import com.znaci.goran.moviesaplikacija.adapters.RecyclerViewImagesAdapter;
 import com.znaci.goran.moviesaplikacija.adapters.RecyclerViewPopularAdapter;
 import com.znaci.goran.moviesaplikacija.adapters.RecyclerViewShowsAdapter;
 import com.znaci.goran.moviesaplikacija.api.RestApi;
+import com.znaci.goran.moviesaplikacija.listeners.OnRowImageClickListener;
 import com.znaci.goran.moviesaplikacija.listeners.OnRowMovieClickListener;
 import com.znaci.goran.moviesaplikacija.listeners.OnRowShowClickListener;
 import com.znaci.goran.moviesaplikacija.models.FavoriteModel;
 import com.znaci.goran.moviesaplikacija.models.FavoriteMoviePost;
+import com.znaci.goran.moviesaplikacija.models.ImageModel;
+import com.znaci.goran.moviesaplikacija.models.Images;
 import com.znaci.goran.moviesaplikacija.models.Movie;
 import com.znaci.goran.moviesaplikacija.models.MovieModel;
 import com.znaci.goran.moviesaplikacija.models.Rated;
@@ -111,6 +118,66 @@ public class ApiCalls {
                             }});}}}
             @Override
             public void onFailure(Call<VideoModel> call, Throwable t) {
+            }});
+    }
+
+    public void GetImages(int id, final RecyclerView rv) {
+        final RecyclerViewImagesAdapter rvImg = new RecyclerViewImagesAdapter(context, new OnRowImageClickListener() {
+            @Override
+            public void onRowClick(Images image, int position) {
+                Intent intent = new Intent(context, SlikiFragmentActivity.class);
+                intent.putExtra("Position",position);
+                context.startActivity(intent);
+            }
+        });
+
+        RestApi api3 = new RestApi(context);
+        Call<ImageModel> call3 = api3.getMovieImages(id);
+        call3.enqueue(new Callback<ImageModel>() {
+            @Override
+            public void onResponse(Call<ImageModel> call, Response<ImageModel> response) {
+                if (response.code() == 200) {
+                    ImageModel model3;
+                    model3 = response.body();
+                    LogInPreferences.addImages(model3,context);
+                    rvImg.setItems(model3.backdrops);
+                    rv.setHasFixedSize(true);
+                    rv.setLayoutManager(new LinearLayoutManager(context,LinearLayoutManager.HORIZONTAL,false));
+                    rv.setAdapter(rvImg);
+                }
+            }
+            @Override
+            public void onFailure(Call<ImageModel> call, Throwable t) {
+            }});
+    }
+
+    public void GetShowsImages(int id, final RecyclerView rv) {
+        final RecyclerViewImagesAdapter rvImg = new RecyclerViewImagesAdapter(context, new OnRowImageClickListener() {
+            @Override
+            public void onRowClick(Images image, int position) {
+                Intent intent = new Intent(context, SlikiFragmentActivity.class);
+                intent.putExtra("Position",position);
+                context.startActivity(intent);
+            }
+        });
+
+        RestApi api3 = new RestApi(context);
+        Call<ImageModel> call3 = api3.getShowsImages(id);
+        call3.enqueue(new Callback<ImageModel>() {
+            @Override
+            public void onResponse(Call<ImageModel> call, Response<ImageModel> response) {
+                if (response.code() == 200) {
+                    ImageModel model3;
+                    model3 = response.body();
+                    LogInPreferences.addImages(model3,context);
+                    rvImg.setItems(model3.backdrops);
+                    rv.setHasFixedSize(true);
+                    rv.setLayoutManager(new LinearLayoutManager(context,LinearLayoutManager.HORIZONTAL,false));
+                    rv.setAdapter(rvImg);
+                }
+            }
+            @Override
+            public void onFailure(Call<ImageModel> call, Throwable t) {
             }});
     }
 

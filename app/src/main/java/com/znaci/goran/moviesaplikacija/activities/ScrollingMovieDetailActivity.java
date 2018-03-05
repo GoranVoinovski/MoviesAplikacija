@@ -54,8 +54,6 @@ import retrofit2.Response;
 
 public class ScrollingMovieDetailActivity extends AppCompatActivity {
 
-    @BindView(R.id.MovieVideo)
-    ImageView videoMovie;
     @BindView(R.id.favorite)
     ImageView favorite;
     @BindView(R.id.watchlist)
@@ -64,8 +62,6 @@ public class ScrollingMovieDetailActivity extends AppCompatActivity {
     ImageView ratingimg;
     @BindView(R.id.direktor)
     TextView textDirektor;
-    @BindView(R.id.play)
-    TextView playMovie;
     @BindView(R.id.writers)
     TextView textWriters;
     @BindView(R.id.stars)
@@ -90,6 +86,8 @@ public class ScrollingMovieDetailActivity extends AppCompatActivity {
     TextView movieavg;
     @BindView(R.id.app_bar)
     AppBarLayout apb;
+    @BindView(R.id.rvImages)
+    RecyclerView rvImage;
     RecyclerViewSimilarAdapter adapter;
     RecyclerViewGenretAdapter genreAdapter;
     Movie model = new Movie();
@@ -178,7 +176,11 @@ public class ScrollingMovieDetailActivity extends AppCompatActivity {
             }
         });
 
+     apiCalls.GetImages(movieID,rvImage);
+
     }
+
+
 
     @OnClick(R.id.seeCast)
     public void Cast(){
@@ -218,6 +220,10 @@ public class ScrollingMovieDetailActivity extends AppCompatActivity {
 
             @Override
             public void onFailure(Call<Movie> call, Throwable t) {
+                t.printStackTrace();
+                if(t.getMessage().contains("Unable to resolve host"));
+                Toast.makeText(ScrollingMovieDetailActivity.this, "No internet connection", Toast.LENGTH_SHORT).show();
+                finish();
             }
         });
     }
@@ -309,8 +315,7 @@ public class ScrollingMovieDetailActivity extends AppCompatActivity {
                     toolbarLayout.setTitle(model.title);
                     movieavg.setText("TMDB rating: " + model.vote_average);
                     titleMovie.setText(model.title);
-                    String path = "http://image.tmdb.org/t/p/w185" + model.backdrop_path;
-                    Picasso.with(ScrollingMovieDetailActivity.this).load(path).centerInside().fit().into(videoMovie);
+
                     genreAdapter = new RecyclerViewGenretAdapter(ScrollingMovieDetailActivity.this, new OnRowGenreClickListener() {
                         @Override
                         public void onRowClick(Genre genre, int position) {
@@ -333,6 +338,9 @@ public class ScrollingMovieDetailActivity extends AppCompatActivity {
 
             @Override
             public void onFailure(Call<Movie> call, Throwable t) {
+                if(t.getMessage().contains("Unable to resolve host"));
+                Toast.makeText(ScrollingMovieDetailActivity.this, "No internet connection", Toast.LENGTH_SHORT).show();
+                finish();
             }
         });
     }
@@ -373,6 +381,9 @@ public class ScrollingMovieDetailActivity extends AppCompatActivity {
 
             @Override
             public void onFailure(Call<MovieModel> call, Throwable t) {
+                if(t.getMessage().contains("Unable to resolve host"));
+                Toast.makeText(ScrollingMovieDetailActivity.this, "No internet connection", Toast.LENGTH_SHORT).show();
+                finish();
             }
         });
     }
@@ -413,6 +424,9 @@ public class ScrollingMovieDetailActivity extends AppCompatActivity {
 
                               @Override
                               public void onFailure(Call<Movie> call, Throwable t) {
+                                  if(t.getMessage().contains("Unable to resolve host"));
+                                  Toast.makeText(ScrollingMovieDetailActivity.this, "No internet connection", Toast.LENGTH_SHORT).show();
+                                  finish();
                               }
                           });
 
@@ -444,6 +458,9 @@ public class ScrollingMovieDetailActivity extends AppCompatActivity {
 
                               @Override
                               public void onFailure(Call<Movie> call, Throwable t) {
+                                  if(t.getMessage().contains("Unable to resolve host"));
+                                  Toast.makeText(ScrollingMovieDetailActivity.this, "No internet connection", Toast.LENGTH_SHORT).show();
+                                  finish();
                               }
                           });
 
@@ -491,6 +508,9 @@ public class ScrollingMovieDetailActivity extends AppCompatActivity {
 
                               @Override
                               public void onFailure(Call<Movie> call, Throwable t) {
+                                  if(t.getMessage().contains("Unable to resolve host"));
+                                  Toast.makeText(ScrollingMovieDetailActivity.this, "No internet connection", Toast.LENGTH_SHORT).show();
+                                  finish();
                               }
                           });
 
@@ -522,6 +542,9 @@ public class ScrollingMovieDetailActivity extends AppCompatActivity {
 
                               @Override
                               public void onFailure(Call<Movie> call, Throwable t) {
+                                  if(t.getMessage().contains("Unable to resolve host"));
+                                  Toast.makeText(ScrollingMovieDetailActivity.this, "No internet connection", Toast.LENGTH_SHORT).show();
+                                  finish();
                               }
                           });
 
@@ -553,6 +576,9 @@ public class ScrollingMovieDetailActivity extends AppCompatActivity {
 
             @Override
             public void onFailure(Call<Movie> call, Throwable t) {
+                if(t.getMessage().contains("Unable to resolve host"));
+                Toast.makeText(ScrollingMovieDetailActivity.this, "No internet connection", Toast.LENGTH_SHORT).show();
+                finish();
             }
         });
     }
@@ -618,6 +644,9 @@ public class ScrollingMovieDetailActivity extends AppCompatActivity {
 
                             @Override
                             public void onFailure(Call<Movie> call, Throwable t) {
+                                if(t.getMessage().contains("Unable to resolve host"));
+                                Toast.makeText(ScrollingMovieDetailActivity.this, "No internet connection", Toast.LENGTH_SHORT).show();
+                                finish();
                             }});
 
 

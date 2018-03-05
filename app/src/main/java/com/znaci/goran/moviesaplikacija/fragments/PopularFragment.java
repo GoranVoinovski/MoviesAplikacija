@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -38,6 +39,7 @@ import retrofit2.Response;
 
 public class PopularFragment extends Fragment {
     @BindView(R.id.RvExplore)RecyclerView rv;
+    @BindView(R.id.swipeRefresh)SwipeRefreshLayout swipe;
     RecyclerViewPopularAdapter adapter;
     private Unbinder mUnbind;
     MovieModel model = new MovieModel();
@@ -79,6 +81,15 @@ public class PopularFragment extends Fragment {
                                     public void onFailure(Call<MovieModel> call, Throwable t) {
                                     }});
                     }}});
+
+            swipe.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+                @Override
+                public void onRefresh() {
+                    PopularMovies();
+                    swipe.setRefreshing(false);
+                }});
+
+
         return view;
     }
 
@@ -89,6 +100,7 @@ public class PopularFragment extends Fragment {
     }
 
     public void PopularMovies(){
+        c = 1;
         pd.show();
         RestApi api = new RestApi(getActivity());
         Call<MovieModel> call = api.getMovies("popular",c);

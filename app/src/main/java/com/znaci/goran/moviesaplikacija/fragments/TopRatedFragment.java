@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -38,6 +39,7 @@ public class TopRatedFragment extends Fragment {
     @BindView(R.id.RvExplore)RecyclerView rv;
     RecyclerViewPopularAdapter adapter;
     private Unbinder mUnbind;
+    @BindView(R.id.swipeRefresh)SwipeRefreshLayout swipe;
     MovieModel model = new MovieModel();
     MovieModel model2 = new MovieModel();
     int c = 1;
@@ -81,6 +83,14 @@ public class TopRatedFragment extends Fragment {
                             });}}
         });
 
+        swipe.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                PopularMoviesTopRated();
+                swipe.setRefreshing(false);
+            }
+        });
+
         return view;
     }
 
@@ -92,6 +102,7 @@ public class TopRatedFragment extends Fragment {
 
 
     public void PopularMoviesTopRated(){
+        c = 1;
         pd.show();
         RestApi api = new RestApi(getActivity());
         Call<MovieModel> call = api.getMovies("top_rated",c);

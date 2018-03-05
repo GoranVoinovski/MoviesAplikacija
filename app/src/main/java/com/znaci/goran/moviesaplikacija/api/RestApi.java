@@ -6,6 +6,7 @@ import com.znaci.goran.moviesaplikacija.interceptor.LoggingInterceptor;
 import com.znaci.goran.moviesaplikacija.models.CreditsModel;
 import com.znaci.goran.moviesaplikacija.models.FavoriteMoviePost;
 import com.znaci.goran.moviesaplikacija.models.GenresModel;
+import com.znaci.goran.moviesaplikacija.models.ImageModel;
 import com.znaci.goran.moviesaplikacija.models.Movie;
 import com.znaci.goran.moviesaplikacija.models.MovieModel;
 import com.znaci.goran.moviesaplikacija.models.Person;
@@ -72,6 +73,8 @@ public class RestApi {
 
     public Call<MovieModel> getSimilar(int id){return request().getSimilar(id);}
 
+    public Call<ImageModel> getMovieImages(int id){return request().getMovieImages(id);}
+
     //--------------------------------------------Shows------------------------------------------------------------------------------
 
     public Call<ShowsModel> getTVByGenre(String id,int page){return request().getTVByGenre(id,page);}
@@ -91,6 +94,8 @@ public class RestApi {
     public Call<CreditsModel> getShowCredits(int id){return request().getShowCredits(id);}
 
     public Call<GenresModel> getTVGenres(){return request().getTVGenres();}
+
+    public Call<ImageModel> getShowsImages(int id){return request().getShowsImages(id);}
 
     //--------------------------------------------Person------------------------------------------------------------------------------
 

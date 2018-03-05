@@ -6,6 +6,7 @@ import android.content.SharedPreferences;
 
 import com.google.gson.Gson;
 import com.znaci.goran.moviesaplikacija.models.FavoriteModel;
+import com.znaci.goran.moviesaplikacija.models.ImageModel;
 import com.znaci.goran.moviesaplikacija.models.RatedList;
 import com.znaci.goran.moviesaplikacija.models.WatchModel;
 
@@ -187,6 +188,25 @@ public class LogInPreferences {
     public static void removeWtchList(Context c){
 
         getPreferences(c).edit().remove("wtch").apply();
+
+    }
+
+    public static void addImages (ImageModel imageModel, Context c){
+
+        Gson gson = new Gson();
+        String mapString = gson.toJson(imageModel);
+        getPreferences(c).edit().putString("Images", mapString).apply();
+
+
+    }
+    public static ImageModel getImages (Context c){
+
+        return new Gson().fromJson(getPreferences(c).getString("Images", ""), ImageModel.class);
+    }
+
+    public static void removeImages(Context c){
+
+        getPreferences(c).edit().remove("Images").apply();
 
     }
 }
