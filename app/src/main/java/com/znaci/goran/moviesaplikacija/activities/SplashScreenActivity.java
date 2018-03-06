@@ -72,7 +72,15 @@ public class SplashScreenActivity extends AppCompatActivity {
                         Intent intent = new Intent(SplashScreenActivity.this,LoginActivity.class);
                         startActivity(intent);
                         finish();
+
                     }}}, 2000);
         }
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+
+        unregisterReceiver(receiver);
     }
 }

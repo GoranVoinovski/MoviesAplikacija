@@ -9,5 +9,5 @@ import java.util.ArrayList;
 
 public class ShowsModel implements Serializable {
 
-    public ArrayList<Shows> results;
+    public ArrayList<Shows> results = new ArrayList<>();
 }

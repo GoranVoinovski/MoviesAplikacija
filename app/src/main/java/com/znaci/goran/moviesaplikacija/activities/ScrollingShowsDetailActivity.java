@@ -27,17 +27,20 @@ import android.widget.Toast;
 import com.squareup.picasso.Picasso;
 import com.znaci.goran.moviesaplikacija.R;
 import com.znaci.goran.moviesaplikacija.adapters.RecyclerViewGenretAdapter;
+import com.znaci.goran.moviesaplikacija.adapters.RecyclerViewNetworktAdapter;
 import com.znaci.goran.moviesaplikacija.adapters.RecyclerViewSimilarAdapter;
 import com.znaci.goran.moviesaplikacija.adapters.RecyclerViewSimilarShowsAdapter;
 import com.znaci.goran.moviesaplikacija.api.RestApi;
 import com.znaci.goran.moviesaplikacija.helpers.ApiCalls;
 import com.znaci.goran.moviesaplikacija.listeners.OnRowGenreClickListener;
 import com.znaci.goran.moviesaplikacija.listeners.OnRowMovieClickListener;
+import com.znaci.goran.moviesaplikacija.listeners.OnRowNetworkClickListener;
 import com.znaci.goran.moviesaplikacija.listeners.OnRowShowClickListener;
 import com.znaci.goran.moviesaplikacija.models.FavoriteMoviePost;
 import com.znaci.goran.moviesaplikacija.models.Genre;
 import com.znaci.goran.moviesaplikacija.models.Movie;
 import com.znaci.goran.moviesaplikacija.models.MovieModel;
+import com.znaci.goran.moviesaplikacija.models.Network;
 import com.znaci.goran.moviesaplikacija.models.Rated;
 import com.znaci.goran.moviesaplikacija.models.RatedList;
 import com.znaci.goran.moviesaplikacija.models.Shows;
@@ -87,8 +90,11 @@ public class ScrollingShowsDetailActivity extends AppCompatActivity {
     TextView movieavg;
     @BindView(R.id.rvImages)
     RecyclerView rvImage;
+    @BindView(R.id.NetwotkRV)
+    RecyclerView rvNetwork;
     RecyclerViewGenretAdapter adapterGenre;
     RecyclerViewSimilarShowsAdapter adapterSimilar;
+    RecyclerViewNetworktAdapter adapterNetworks;
     FloatingActionButton fab;
     CollapsingToolbarLayout toolbarLayout;
     Shows model;
@@ -213,6 +219,19 @@ public class ScrollingShowsDetailActivity extends AppCompatActivity {
                                 startActivityForResult(intent, 1212);
                             }
                         });
+                        adapterNetworks = new RecyclerViewNetworktAdapter(ScrollingShowsDetailActivity.this, new OnRowNetworkClickListener() {
+                            @Override
+                            public void onRowClick(Network network, int position) {
+                                Intent intent = new Intent(ScrollingShowsDetailActivity.this, NetworkActivity.class);
+                                intent.putExtra("GID", network.id);
+                                intent.putExtra("name", network.name);
+                                startActivityForResult(intent, 1212);
+                            }
+                        });
+                        adapterNetworks.setItems(model.networks);
+                        rvNetwork.setHasFixedSize(true);
+                        rvNetwork.setLayoutManager(new LinearLayoutManager(ScrollingShowsDetailActivity.this,LinearLayoutManager.HORIZONTAL,false));
+                        rvNetwork.setAdapter(adapterNetworks);
                         adapterGenre.setItems(model.genres);
                         genresRV.setHasFixedSize(true);
                         genresRV.setLayoutManager(new LinearLayoutManager(ScrollingShowsDetailActivity.this, LinearLayoutManager.HORIZONTAL, false));

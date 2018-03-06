@@ -88,6 +88,7 @@ public class ScrollingMovieDetailActivity extends AppCompatActivity {
     AppBarLayout apb;
     @BindView(R.id.rvImages)
     RecyclerView rvImage;
+    @BindView(R.id.seeReviews)Button reviews;
     RecyclerViewSimilarAdapter adapter;
     RecyclerViewGenretAdapter genreAdapter;
     Movie model = new Movie();
@@ -178,6 +179,7 @@ public class ScrollingMovieDetailActivity extends AppCompatActivity {
 
      apiCalls.GetImages(movieID,rvImage);
 
+
     }
 
 
@@ -186,6 +188,16 @@ public class ScrollingMovieDetailActivity extends AppCompatActivity {
     public void Cast(){
 
         Intent intent = new Intent(ScrollingMovieDetailActivity.this,FullCastActivity.class);
+        intent.putExtra("id",movieID);
+        startActivity(intent);
+
+
+    }
+
+    @OnClick(R.id.seeReviews)
+    public void Reviews(){
+
+        Intent intent = new Intent(ScrollingMovieDetailActivity.this,ReviewActivity.class);
         intent.putExtra("id",movieID);
         startActivity(intent);
 

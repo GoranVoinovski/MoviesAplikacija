@@ -103,4 +103,5 @@
     </string>
     <string name="title_activity_scrolling_movie_detail">ScrollingMovieDetailActivity</string>
     <string name="title_activity_scrolling_shows_detail">ScrollingShowsDetailActivity</string>
+    <string name="check_reviews">Check reviews</string>
 </resources>

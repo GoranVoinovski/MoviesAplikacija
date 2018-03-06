@@ -12,6 +12,7 @@ import com.znaci.goran.moviesaplikacija.models.MovieModel;
 import com.znaci.goran.moviesaplikacija.models.Person;
 import com.znaci.goran.moviesaplikacija.models.PersonModel;
 import com.znaci.goran.moviesaplikacija.models.Rated;
+import com.znaci.goran.moviesaplikacija.models.ReviewsModel;
 import com.znaci.goran.moviesaplikacija.models.Shows;
 import com.znaci.goran.moviesaplikacija.models.ShowsModel;
 import com.znaci.goran.moviesaplikacija.models.User;
@@ -75,11 +76,14 @@ public class RestApi {
 
     public Call<ImageModel> getMovieImages(int id){return request().getMovieImages(id);}
 
+    public Call<ReviewsModel> getMovieReviews(int id){return request().getMovieReviews(id);}
     //--------------------------------------------Shows------------------------------------------------------------------------------
 
     public Call<ShowsModel> getTVByGenre(String id,int page){return request().getTVByGenre(id,page);}
 
     public Call<ShowsModel> getTVByYear(int id,int page){return request().getTVByYear(id,page);}
+
+    public Call<ShowsModel> getTVByNetwork(int id,int page){return request().getTVByNetwork(id,page);}
 
     public Call<Shows> getShow(int id,String append_to_response){return request().getShows(id,append_to_response);}
 

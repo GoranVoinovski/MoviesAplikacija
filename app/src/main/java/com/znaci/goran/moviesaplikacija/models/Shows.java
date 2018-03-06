@@ -26,4 +26,5 @@ public class Shows implements Serializable{
     public boolean watchlist;
     public CreditsModel credits;
     public ArrayList<Genre> genres;
+    public ArrayList<Network> networks;
 }

@@ -94,7 +94,11 @@
             android:name=".activities.AdvancedSearchShowsActivity"
             android:label="TV Show Search"
             android:screenOrientation="portrait" />
-        <activity android:name=".activities.SlikiFragmentActivity" android:theme="@style/Theme.AppCompat.NoActionBar"></activity>
+        <activity
+            android:name=".activities.SlikiFragmentActivity"
+            android:theme="@style/Theme.AppCompat.NoActionBar" />
+        <activity android:name=".activities.ReviewActivity" />
+        <activity android:name=".activities.NetworkActivity"></activity>
     </application>
 
 </manifest>

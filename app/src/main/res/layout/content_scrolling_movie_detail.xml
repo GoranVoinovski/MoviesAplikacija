@@ -152,7 +152,18 @@
 
             </android.support.v7.widget.RecyclerView>
 
+
+
         </LinearLayout>
+
+        <Button
+            android:id="@+id/seeReviews"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:layout_margin="10dp"
+            android:background="@color/zoltarejting"
+            android:text="@string/check_reviews"
+            android:textColor="@color/white" />
 
     </LinearLayout>
 

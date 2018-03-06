@@ -9,6 +9,7 @@ import com.znaci.goran.moviesaplikacija.models.MovieModel;
 import com.znaci.goran.moviesaplikacija.models.Person;
 import com.znaci.goran.moviesaplikacija.models.PersonModel;
 import com.znaci.goran.moviesaplikacija.models.Rated;
+import com.znaci.goran.moviesaplikacija.models.ReviewsModel;
 import com.znaci.goran.moviesaplikacija.models.Shows;
 import com.znaci.goran.moviesaplikacija.models.ShowsModel;
 import com.znaci.goran.moviesaplikacija.models.User;
@@ -66,12 +67,18 @@ public interface ApiService {
     @GET("movie/{movie_id}/images?" + ApiConstants.ApiKey)
     Call<ImageModel> getMovieImages(@Path("movie_id") int link);
 
+    @GET("movie/{movie_id}/reviews?" + ApiConstants.ApiKey)
+    Call<ReviewsModel> getMovieReviews(@Path("movie_id") int link);
+
     //--------------------------------------------Shows------------------------------------------------------------------------------
     @GET("genre/tv/list?" + ApiConstants.ApiKey)
     Call<GenresModel> getTVGenres();
 
     @GET("discover/tv?" + ApiConstants.ApiKey)
     Call<ShowsModel> getTVByGenre(@Query("with_genres") String genre,@Query("page") int page);
+
+    @GET("discover/tv?" + ApiConstants.ApiKey)
+    Call<ShowsModel> getTVByNetwork(@Query("with_networks") int id,@Query("page") int page);
 
     @GET("discover/tv?" + ApiConstants.ApiKey)
     Call<ShowsModel> getTVByYear(@Query("primary_release_year") int year,@Query("page") int page);
@@ -96,6 +103,7 @@ public interface ApiService {
 
     @GET("tv/{tv_id}/images?" + ApiConstants.ApiKey)
     Call<ImageModel> getShowsImages(@Path("tv_id") int link);
+
 
     //--------------------------------------------Person------------------------------------------------------------------------------
 

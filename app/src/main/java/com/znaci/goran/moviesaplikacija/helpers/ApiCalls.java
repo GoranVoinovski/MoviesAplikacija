@@ -28,11 +28,14 @@ import com.znaci.goran.moviesaplikacija.activities.SlikiFragmentActivity;
 import com.znaci.goran.moviesaplikacija.activities.WatchlistActivity;
 import com.znaci.goran.moviesaplikacija.activities.WatchlistShowsActivity;
 import com.znaci.goran.moviesaplikacija.adapters.RecyclerViewImagesAdapter;
+import com.znaci.goran.moviesaplikacija.adapters.RecyclerViewNetworktAdapter;
 import com.znaci.goran.moviesaplikacija.adapters.RecyclerViewPopularAdapter;
+import com.znaci.goran.moviesaplikacija.adapters.RecyclerViewReviewsAdapter;
 import com.znaci.goran.moviesaplikacija.adapters.RecyclerViewShowsAdapter;
 import com.znaci.goran.moviesaplikacija.api.RestApi;
 import com.znaci.goran.moviesaplikacija.listeners.OnRowImageClickListener;
 import com.znaci.goran.moviesaplikacija.listeners.OnRowMovieClickListener;
+import com.znaci.goran.moviesaplikacija.listeners.OnRowNetworkClickListener;
 import com.znaci.goran.moviesaplikacija.listeners.OnRowShowClickListener;
 import com.znaci.goran.moviesaplikacija.models.FavoriteModel;
 import com.znaci.goran.moviesaplikacija.models.FavoriteMoviePost;
@@ -40,8 +43,10 @@ import com.znaci.goran.moviesaplikacija.models.ImageModel;
 import com.znaci.goran.moviesaplikacija.models.Images;
 import com.znaci.goran.moviesaplikacija.models.Movie;
 import com.znaci.goran.moviesaplikacija.models.MovieModel;
+import com.znaci.goran.moviesaplikacija.models.Network;
 import com.znaci.goran.moviesaplikacija.models.Rated;
 import com.znaci.goran.moviesaplikacija.models.RatedList;
+import com.znaci.goran.moviesaplikacija.models.ReviewsModel;
 import com.znaci.goran.moviesaplikacija.models.Shows;
 import com.znaci.goran.moviesaplikacija.models.ShowsModel;
 import com.znaci.goran.moviesaplikacija.models.User;
@@ -70,6 +75,9 @@ public class ApiCalls {
     FavoriteModel favoriteModel;
     WatchModel watchModel;
     RatedList ratedList;
+    ShowsModel model3,model4;
+    int page = 1;
+    ProgressDialog pg;
     public ApiCalls(Context context) {
         this.context = context;
     }
@@ -180,6 +188,85 @@ public class ApiCalls {
             public void onFailure(Call<ImageModel> call, Throwable t) {
             }});
     }
+
+    public void GetNetwork(final int id, final RecyclerView rv) {
+        pg = new ProgressDialog(context);
+        pg.setMessage("loading");
+
+        final RecyclerViewShowsAdapter rvImg = new RecyclerViewShowsAdapter(context, new OnRowShowClickListener() {
+            @Override
+            public void onRowClick(Shows shows, int position) {
+                Intent intent = new Intent(context, ScrollingShowsDetailActivity.class);
+                intent.putExtra("showid",shows.id);
+                context.startActivity(intent);
+            }
+
+            @Override
+            public void onRowFavClick(Shows movie, int position, TextView tv) {
+
+            }
+
+            @Override
+            public void onRowWatchClick(Shows movie, int position, TextView tv) {
+
+            }
+        });
+        pg.show();
+        RestApi api3 = new RestApi(context);
+        Call<ShowsModel> call3 = api3.getTVByNetwork(id,page);
+        call3.enqueue(new Callback<ShowsModel>() {
+            @Override
+            public void onResponse(Call<ShowsModel> call, Response<ShowsModel> response) {
+                if (response.code() == 200) {
+
+                    model3 = response.body();
+                    if (model3!= null){
+                        if (model3.results.size() > 0){
+                            rvImg.setItems(model3.results);
+                            rv.setHasFixedSize(true);
+                            rv.setLayoutManager(new GridLayoutManager(context,2));
+                            rv.setAdapter(rvImg);
+                            pg.dismiss();
+                        }
+                    }
+                }
+            }
+            @Override
+            public void onFailure(Call<ShowsModel> call, Throwable t) {
+            }});
+
+        rv.addOnScrollListener(new RecyclerView.OnScrollListener() {
+            @Override
+            public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
+                super.onScrollStateChanged(recyclerView, newState);
+
+                if (!rv.canScrollVertically(1)) {
+                    page++;
+                    pg.show();
+                    RestApi api4 = new RestApi(context);
+                    Call<ShowsModel> call4 = api4.getTVByNetwork(id,page);
+                    call4.enqueue(new Callback<ShowsModel>() {
+                        @Override
+                        public void onResponse(Call<ShowsModel> call, Response<ShowsModel> response) {
+                            if (response.code() == 200) {
+                                if (model3 != null){
+                                    if (model3.results.size() > 0){
+                                        ShowsModel model4;
+                                        model4 = response.body();
+                                        model3.results.addAll(model4.results);
+                                        rvImg.notifyDataSetChanged();
+                                        pg.dismiss();
+                                    }
+                                }
+
+                            }
+                        }
+                        @Override
+                        public void onFailure(Call<ShowsModel> call, Throwable t) {
+                        }});}}
+        });
+    }
+
 
     public void RatedMovies(){
 
